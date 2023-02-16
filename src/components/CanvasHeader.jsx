@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from 'react-router-dom'
 import styled from "styled-components"
 
-function Header() {
+function Header2() {
     const navigate = useNavigate();
 
     const onPathHandler = (path) => {
@@ -13,7 +13,9 @@ function Header() {
             <>  
                 <NavbarWrapper>
                     <Navbar>
-                        <NavItem />
+                        <NavItem>
+                            <Tool>Tool</Tool>
+                        </NavItem>
                         <NavItem>
                             <Logo onClick={() => onPathHandler("/")}>Doodle</Logo>
                         </NavItem>
@@ -26,7 +28,7 @@ function Header() {
     )
 }
 
-export default Header;
+export default Header2;
 
 const NavbarWrapper = styled.nav`
     margin: 0rem;
@@ -59,10 +61,17 @@ const NavItem = styled.div`
   width: fit-content;
 `;
 
+const Tool = styled.div`
+    padding-top: 50px;
+    margin: 20px;
+    font-size: 1.5rem;
+    font-family: Ink Free;
+    height: 4.8rem;
+    color: #FFFFFF;
+`
 
 const Logo = styled.div`
     padding-top: 10px;
-    margin-left: 81px;
     text-align: center;
     font-size: 3rem;
     font-family: Ink Free;
