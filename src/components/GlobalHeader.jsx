@@ -18,7 +18,7 @@ function Header() {
                             <Logo onClick={() => onPathHandler("/")}>Doodle</Logo>
                         </NavItem>
                         <NavItem>
-                            <SighnIn>Login</SighnIn>
+                        <SignIn onClick={() => onPathHandler("/login")}>Login</SignIn>
                         </NavItem>
                     </Navbar>
                 </NavbarWrapper>
@@ -70,7 +70,7 @@ const Logo = styled.div`
     color: #FFFFFF;
 `
 
-const SighnIn = styled.div`
+const SignIn = styled.div`
     padding-top: 50px;
     margin: 20px;
     font-size: 1.5rem;
