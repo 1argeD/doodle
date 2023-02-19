@@ -18,7 +18,7 @@ function Header() {
                             <Logo onClick={() => onPathHandler("/")}>Doodle</Logo>
                         </NavItem>
                         <NavItem>
-                        <SignIn onClick={() => onPathHandler("/login")}>Login</SignIn>
+                            <SignIn onClick={() => onPathHandler("/login")}>Login</SignIn>
                         </NavItem>
                     </Navbar>
                 </NavbarWrapper>
