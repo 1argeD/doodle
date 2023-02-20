@@ -1,20 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import Background from "./Background";
 
 function LoginBox() {
     return <>
             <NavWapper>
-                <Background></Background>
                 <NavBar>
-                <Box>
-                    <Text>Login</Text>
-                    <Put>Push ID</Put>
-                    <NavItem>
-                    <Put>Push PW</Put>
-                    </NavItem>
-                    <Kakao>Login with kakao</Kakao>
-                </Box>
+                        <Box>
+                            <Text>Login</Text>
+                            <Put>Push ID</Put>
+                            <NavItem>
+                            <Put>Push PW</Put>
+                            </NavItem>
+                            <Kakao>Login with kakao</Kakao>
+                        </Box>
                 </NavBar>
             </NavWapper>
             </>
@@ -23,7 +21,13 @@ function LoginBox() {
 export default LoginBox;
 
 const NavWapper = styled.nav`
+    margin-top:3rem;
+    top: 50%;
+    left:50%;
     display: flex;
+    position: absolute;
+    z-index: 5;
+    transform: translate(-50%, -50%);
 `
 
 const NavBar = styled.nav`
@@ -41,8 +45,6 @@ const NavItem = styled.div`
 const Box = styled.div`
     width: 30rem;
     margin-top: 1.5rem;
-    margin-left: auto;
-    margin-right: auto;
     height : 30rem;
     border-radius: 10px;
     background-Color: #373737;
@@ -64,8 +66,7 @@ const Put = styled.div`
 const Text = styled.div`
     padding: auto;
     margin-top: 1rem;
-    margin-left: 12rem;
-    margin-right: 12rem;
+    text-align: center;
     font-size: 3rem;
     font-family: Ink Free;
     height: 4.8rem;
@@ -84,7 +85,6 @@ const Kakao = styled.div`
     height: 4rem;
     background-Color: #ffcc00;
     border-radius: 10px;
-    linear-gradient(90deg, #cdcccc 0px, #cdcccc 1px, transparent 1px, transparent 99px,  transparent 100px);
 `
 
 

@@ -10,10 +10,11 @@ function Background() {
 export default Background;
 
 const Canvas = styled.div`
+    margin-top: 20rem;
+    display: flex;
     width: 100%;
-    textAligin: "center";
-    lineHeight: "0,1";
-    margin: "10px 0 20px";
-    borderBottom: "1px solid #aaa";
-    background-color: #f6f6f6;
+    height: 0.025rem;
+    background-color: black;
+    position: relative;
+    z-index: 1;
 `

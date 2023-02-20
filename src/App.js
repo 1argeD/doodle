@@ -1,26 +1,10 @@
 /* eslint-disable*/
-import React from 'react';
-import Main from '../src/pages/main';
-import Canvas from '../src/pages/Canvas';
-import NotFound from '../src/pages/NotFound';
-import Login from '../src/pages/login'
-import Signup from './pages/SignUp'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import Routers from './routers/Routers'
 
-const App = () => {
-        return (
-                <div className='App'>
-                      <BrowserRouter>
-                            <Routes>
-                                  <Route path="/" element={<Main />}></Route>
-                                  <Route path="/canvas/*" element={<Canvas />}></Route>
-                                  <Route path="/login" element={<Login />}></Route>
-                                  <Route path="/signup" element={<Signup />}></Route>
-                                  <Route path="*" element={<NotFound />}></Route>
-                            </Routes>
-                      </BrowserRouter>
-                </div>
-              );           
+function App() {
+      useEffect(() => {},[]);
+        return <Routers />;     
 };
 
 export default App;

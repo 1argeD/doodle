@@ -33,6 +33,7 @@ const NavbarWrapper = styled.nav`
     padding: 0rem;
     height: 4.8rem;
     width: 100%;
+    z-index: 10;
     position: relative;
     box-sizing: border-box;
     background-color: #373737;
@@ -62,7 +63,8 @@ const NavItem = styled.div`
 
 const Logo = styled.div`
     padding-top: 10px;
-    margin-left: 81px;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
     font-size: 3rem;
     font-family: Ink Free;

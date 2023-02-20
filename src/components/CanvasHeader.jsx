@@ -36,6 +36,7 @@ const NavbarWrapper = styled.nav`
     height: 4.8rem;
     width: 100%;
     position: relative;
+    z-index: 10;
     box-sizing: border-box;
     background-color: #373737;
 `
