@@ -1,44 +1,59 @@
 import React, { useRef, useEffect, useState } from "react";
-import Canvas  from "../components/Background"
+import Background  from "../components/Background";
+import styled from "styled-components";
 
-const Canvas = () => {
+const Painting = () => {
     const canvasRef = useRef(null);
 
     const [getCtx, setGetCtx] = useState(null);
 
-    cosnt [painting, setPainting] = useState(false);
+    const [painting, setPainting] = useState(false);
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        canvas.width = 650;
-        canvas.height = 540;
         const ctx = canvas.getContext("2d");
         ctx.lineJoin = "round";
         ctx.lineWidth = 2.5;
         ctx.strokeStyle = "#000000";
         setGetCtx(ctx);
     }, []);
+
+
     const drawFn = e => {
         const mouseX = e.nativeEvent.offsetX;
         const mouseY = e.nativeEvent.offsetY;
-        getCtx.stroke();
+
+        if (!painting) {
+            getCtx.beginPath();
+            getCtx.moveTo(mouseX, mouseY);
+        } else {
+            getCtx.lineTo(mouseX, mouseY);
+            getCtx.stroke();
+        }
     }
 
-    return <Canvas>
-        <div className="view">
-            <div className="canvasWrap">
-                <paint 
-                className="canvas"
+    return <Background>
+        <View>
+            <CanvasWrap>
+                <Canvas
                 ref={canvasRef}
+                width="650"
+                height={"500"}
                 onMouseDown={() => setPainting(true)}
                 onMouseUp={() => setPainting(false)}
                 onMouseMove={e => drawFn(e)}
                 onMouseLeave={() => setPainting(false)}    
                 >
-                </paint>
-            </div>
-        </div>
-    </Canvas>
+                </Canvas>
+            </CanvasWrap>
+        </View>
+    </Background>
 }
 
-export default Canvas
+export default Painting;
+
+const View = styled.div``
+
+const CanvasWrap = styled.div``
+
+const Canvas = styled.div``
