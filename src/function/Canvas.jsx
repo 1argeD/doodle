@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from "react";
-import Background  from "../components/Background";
 import styled from "styled-components";
 
 const Painting = () => {
@@ -11,6 +10,8 @@ const Painting = () => {
 
     useEffect(() => {
         const canvas = canvasRef.current;
+        canvas.width = 800;
+        canvas.height = 800;
         const ctx = canvas.getContext("2d");
         ctx.lineJoin = "round";
         ctx.lineWidth = 2.5;
@@ -33,24 +34,32 @@ const Painting = () => {
     }
 
     return <Background>
-        <View>
-            <CanvasWrap>
-                <Canvas
-                ref={canvasRef}
-                width="650"
-                height={"500"}
-                onMouseDown={() => setPainting(true)}
-                onMouseUp={() => setPainting(false)}
-                onMouseMove={e => drawFn(e)}
-                onMouseLeave={() => setPainting(false)}    
-                >
-                </Canvas>
-            </CanvasWrap>
-        </View>
+        <div className="view">
+        <div className="canvasWrap">
+          <canvas 
+            className="canvas"
+            ref={canvasRef}
+            onMouseDown={() => setPainting(true)}
+            onMouseUp={() => setPainting(false)}
+            onMouseMove={e => drawFn(e)}
+            onMouseLeave={() => setPainting(false)}
+          >
+          </canvas>
+        </div>
+      </div>
     </Background>
 }
 
 export default Painting;
+
+const Background = styled.div`
+    width: 800px;
+    height: 800px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 
 const View = styled.div``
 

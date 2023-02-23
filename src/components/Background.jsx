@@ -10,9 +10,10 @@ function Background() {
 export default Background;
 
 const Canvas = styled.div`
-    width: 50rem;
-    height: 50rem;
-    background-color: black;
-    position: relative;
-    z-index: 1;
+    width: 800px;
+    height: 800px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
