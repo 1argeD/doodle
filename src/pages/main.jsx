@@ -1,11 +1,12 @@
 import React from "react";
 import Header from "../components/GlobalHeader";
+import ProjectButton from "../components/ProjectButton";
 
 const Main = () => {
     return (
         <>
             <Header IconType={"ArrowBack"}/>
-            <h3>메인페이지</h3>
+            <ProjectButton />
         </>
     )
 }

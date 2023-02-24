@@ -6,7 +6,6 @@ const Canvas = () => {
     return (
         <>  
             <Header2 IconType={"ArrowBack"}/>
-            <h3>캔버스 페이지</h3>
             <Painting />
         </>
     )

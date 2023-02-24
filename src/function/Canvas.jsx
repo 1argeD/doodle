@@ -10,7 +10,7 @@ const Painting = () => {
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        canvas.width = 800;
+        canvas.width = 1300;
         canvas.height = 800;
         const ctx = canvas.getContext("2d");
         ctx.lineJoin = "round";
@@ -34,8 +34,6 @@ const Painting = () => {
     }
 
     return <Background>
-        <div className="view">
-        <div className="canvasWrap">
           <canvas 
             className="canvas"
             ref={canvasRef}
@@ -45,24 +43,19 @@ const Painting = () => {
             onMouseLeave={() => setPainting(false)}
           >
           </canvas>
-        </div>
-      </div>
     </Background>
 }
 
 export default Painting;
 
 const Background = styled.div`
-    width: 800px;
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1300px;
     height: 800px;
     border: 1px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
 `
-
-const View = styled.div``
-
-const CanvasWrap = styled.div``
-
-const Canvas = styled.div``

@@ -10,10 +10,14 @@ function Background() {
 export default Background;
 
 const Canvas = styled.div`
-    width: 800px;
+    margin-top : 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1300px;
     height: 800px;
     border: 1px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 `
