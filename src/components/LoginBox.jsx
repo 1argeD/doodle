@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import KakaoButton from "./element/button/KakaoButton";
 
 function LoginBox() {
     return <>
@@ -11,7 +12,7 @@ function LoginBox() {
                             <NavItem>
                             <Put>Push PW</Put>
                             </NavItem>
-                            <Kakao>Login with kakao</Kakao>
+                            <KakaoButton />
                         </Box>
                 </NavBar>
             </NavWapper>
@@ -71,20 +72,6 @@ const Text = styled.div`
     font-family: Ink Free;
     height: 4.8rem;
     color: #FFFFFF;
-`
-
-const Kakao = styled.div`
-    text-align: center;
-    font-family: Ink Free;
-    font-size: 1.5rem;
-    margin-top: 2rem;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    width: 25rem;
-    height: 4rem;
-    background-Color: #ffcc00;
-    border-radius: 10px;
 `
 
 
