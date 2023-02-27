@@ -41,6 +41,7 @@ const userSlice = createSlice({
         state.loading = false;
         state.userInfo = payload.data;
         localStorage.setItem("user-info", JSON.stringify(payload.data));
+        state.userToken = payload.headers.authotzation;
         state.success = true;
     },
     [userLogin.rejected]: (state, { payload }) => {
@@ -55,9 +56,18 @@ const userSlice = createSlice({
     },
     [regsterUser.fulfilled]: (state, { payload }) => {
         state.loading = false;
+        state.registerSuccess = payload.success;
+    },
+    [registerUser.rejected]: (state,{ payload }) => {
+        state.loading = false;
         state.error = payload;
     },
     //유저 로그아웃
+    [userLogout.pending] : (state) => {
+        state.loading = false;
+        state.error = null;
+    },
+
     [userLogout.fulfilled]: (state, { payload }) => {
         localStorage.removeItem("access-token");
         localStorage.removeItem("refresh")
