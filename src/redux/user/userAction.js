@@ -1,7 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { apis } from "../../../shared/axios";
-import { get } from "react-hook-form";
 
 const URL = {
     BASE: Process.env.REACT_APP_BASE_URL,
