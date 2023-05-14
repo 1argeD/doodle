@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import KakaoButton from "../components/element/button/KakaoButton";
-import KakaoButton from "../components/element/button/KakaoButton";
+import KakaoButton from "../components/element/button/LoginButton";
+import KakaoButton from "../components/element/button/LoginButton";
 import LoginBox from "../components/LoginBox"
 
 const KakaoLogin = () => {
