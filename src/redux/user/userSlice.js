@@ -9,7 +9,7 @@ import { Action } from "@remix-run/router";
 
 export const userRegister = createAsyncThunk(
     "member/signup",
-    async ({email, nickname, password, passwordConfirm,test}) => {
+    async ({email, nickname, password, passwordConfirm}) => {
         try{
             const response = await axios.post(`/member/signup`, {
                 email : email,
@@ -37,7 +37,6 @@ export const userLogin = createAsyncThunk(
 
             localStorage.setItem("nickname", nickname)
             localStorage.setItem("accessToken", token)
-            localStorage.setItem("test", test)
             
             window.localStorage.href = "/main"
             return thunkAPI.fulfillwithValue(payload);
