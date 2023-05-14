@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import KakaoButton from "./element/button/KakaoButton";
+import KakaoButton from "./element/button/LoginButton";
 
 function LoginBox() {
     return <>
