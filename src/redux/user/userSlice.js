@@ -1,11 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import {
-    userLogin,
-    userLogout,
-} from "../user/userAction";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Swal from "sweetalert2"
 import axios from "axios";
-import { Action } from "@remix-run/router";
+
 
 export const userRegister = createAsyncThunk(
     "member/signup",
@@ -30,13 +26,15 @@ export const userLogin = createAsyncThunk(
         try {
             const{ email, password } = payload;
             const datas = {email:email, password:password}
-            const {data, headers} = await axios.post('member/login', data)
+            const {data, headers} = await axios.post('member/login', datas)
 
-            let token = headers.getAuthorization
+            let token = headers.authorization
+            let refreshtoken = headers.refreshtoken
             let nickname = data.data.nickname
 
             localStorage.setItem("nickname", nickname)
             localStorage.setItem("accessToken", token)
+            localStorage.setItem("refreshToken", refreshtoken)
             
             window.localStorage.href = "/main"
             return thunkAPI.fulfillwithValue(payload);
