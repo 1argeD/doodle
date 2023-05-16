@@ -1,15 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
-function KakaoButton() {
+function LoginButton() {
     return(
-        <KakaoBox>kakao Login</KakaoBox>
+        <LoginBox>
+            Login
+        
+        </LoginBox>
+        
     )
 }
 
-export default KakaoButton;
+export default LoginButton;
 
-const KakaoBox = styled.div`
+const LoginBox = styled.div`
     text-align: center;
     font-family: Ink Free;
     font-size: 1.5rem;

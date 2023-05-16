@@ -1,19 +1,79 @@
 import React from "react";
 import styled from "styled-components";
-import KakaoButton from "./element/button/LoginButton";
+import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"
+import { userLogin } from "../redux/user/userSlice";
+import { LoginButton } from "./element/button/LoginButton";
 
-function LoginBox() {
+const LoginBox = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const success = useSelector((state) => state.user.userToken);
+
+    const {
+      register,
+      handleSubmit,
+      formState: { isDirty, errors},
+    } = useForm({mode: "onChange"});
+
+    const onSubmit = (payload, thunkAPI) => {
+        dispatch(userLogin(payload));
+    };
+
+    const goToRegister = () => {
+        navigate("/Register")
+    }
+
     return <>
             <NavWapper>
                 <NavBar>
-                        <Box>
-                            <Text>Login</Text>
+                    <Box onSubmit={handleSubmit(onSubmit)}>
+                        <Text>Login</Text>
+                        <Container>
                             <Put>Push ID</Put>
+                            <inputWapper>
+                                <Input 
+                                type="text"
+                                tabIndex="2"
+                                className="input"
+                                {...register("userId", {
+                                    required : "가입한 이메일을 적어주세요",
+                                })}
+                                aria-invalid={
+                                    !isDirty ? undefined : errors.userId ? "true" : "false"
+                                }
+                                />
+                                {errors.userId && (
+                                    <HelperText>{errors?.userId?.message}</HelperText>
+                                )}
+                                {!errors.userId&&(
+                                    <HelperText>{"가입한 이메일을 적어주세요."}</HelperText>
+                                )}
+                            </inputWapper>
                             <NavItem>
-                            <Put>Push PW</Put>
+                                <Put>Push PW</Put>
+                                <InputWrapper>
+                                    <Input 
+                                    type="password"
+                                    tabIndex="2"
+                                    className="input"
+                                    {...register("password", {
+                                        required: "비밀번호를 입력해주세요",
+                                    })}
+                                    aria-invalid={
+                                        !isDirty ? undefined : errors.password ? "true" : "false"
+                                    }
+                                    name="password"
+                                    />
+                                    {errors.password && (
+                                        <HelperText>{"비밀번호를 입력해주세요"}</HelperText>
+                                    )}
+                                </InputWrapper>
                             </NavItem>
-                            <KakaoButton />
-                        </Box>
+                        </Container>
+                        <LoginButton />
+                    </Box>
                 </NavBar>
             </NavWapper>
             </>
@@ -50,6 +110,9 @@ const Box = styled.div`
     border-radius: 10px;
     background-Color: #373737;
 `
+const Container = styled.div`
+    display: flex;
+`
 
 const Put = styled.div`
     text-align: center;
@@ -74,4 +137,15 @@ const Text = styled.div`
     color: #FFFFFF;
 `
 
+const InputWrapper = styled.div`
+    position: relative;
+`
+
+const Input = styled.div`
+    box-sizing: border-box
+` 
+
+const HelperText = styled.div`
+    display: flex;
+`
 
