@@ -43,6 +43,7 @@ const LoginBox = () => {
                                 aria-invalid={
                                     !isDirty ? undefined : errors.userId ? "true" : "false"
                                 }
+                                name="userId"
                                 />
                                 {errors.userId && (
                                     <HelperText>{errors?.userId?.message}</HelperText>
@@ -66,6 +67,9 @@ const LoginBox = () => {
                                     }
                                     name="password"
                                     />
+                                    {errors.password && (
+                                        <HelperText>{errors?.password?.message}</HelperText>
+                                    )}
                                     {errors.password && (
                                         <HelperText>{"비밀번호를 입력해주세요"}</HelperText>
                                     )}
