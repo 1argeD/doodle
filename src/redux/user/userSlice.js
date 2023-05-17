@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit"
 import Swal from "sweetalert2"
 import axios from "axios";
-
 
 export const userRegister = createAsyncThunk(
     "member/signup",
@@ -26,15 +26,13 @@ export const userLogin = createAsyncThunk(
         try {
             const{ email, password } = payload;
             const datas = {email:email, password:password}
-            const {data, headers} = await axios.post('member/login', datas)
+            const {data, headers} = await axios.post('member/login', data)
 
-            let token = headers.authorization
-            let refreshtoken = headers.refreshtoken
+            let token = headers.getAuthorization
             let nickname = data.data.nickname
 
             localStorage.setItem("nickname", nickname)
             localStorage.setItem("accessToken", token)
-            localStorage.setItem("refreshToken", refreshtoken)
             
             window.localStorage.href = "/main"
             return thunkAPI.fulfillwithValue(payload);

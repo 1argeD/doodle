@@ -3,10 +3,7 @@ import styled from "styled-components";
 
 function LoginButton() {
     return(
-        <LoginBox>
-            Login
-        
-        </LoginBox>
+        <LoginBox>Login</LoginBox>
         
     )
 }
