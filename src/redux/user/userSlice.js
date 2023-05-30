@@ -4,10 +4,10 @@ import Swal from "sweetalert2"
 import axios from "axios";
 
 export const userRegister = createAsyncThunk(
-    "member/signup",
+    "/member/sign",
     async ({email, nickname, password, passwordConfirm}) => {
         try{
-            const response = await axios.post(`/member/signup`, {
+            const response = await axios.post(`/member/sign`, {
                 email : email,
                 nickname : nickname,
                 password : password,
@@ -21,7 +21,7 @@ export const userRegister = createAsyncThunk(
 )  
 
 export const userLogin = createAsyncThunk(
-    "member/login",
+    "/member/login",
     async (payload, thunkAPI) => {
         try {
             const{ email, password } = payload;
@@ -35,7 +35,7 @@ export const userLogin = createAsyncThunk(
             localStorage.setItem("accessToken", token)
             
             window.localStorage.href = "/main"
-            return thunkAPI.fulfillwithValue(payload);
+            return thunkAPI.fulfillWithValue(payload);
         } catch(error) {
             if(error.response.data.errormessage === "로그인에 실패하였습니다.") {
                 Swal.fire({title:"로그인에 실패했습니다.", confirmButtonColor:"#FFD68B"})
@@ -54,33 +54,33 @@ export const userLogin = createAsyncThunk(
 ); 
 
 
-    const userSlice = createSlice({
-        name : "userSlice",
-        initialState : {},
-        reducers: {
-            asyncUserName : (state, action) => {
-                state.nickname = localStorage.getItem("nickname");
-            },
-            userLogout: (state, action) => {
-                const userToken = localStorage.setItem("aceessToken");
-                axios.delete(`/member/login`, {
-                    headers: {
-                        Authorization: userToken,
-                    },
-                });
-            } ,
+const userSlice = createSlice({
+    name : "userSlice",
+    initialState : {},
+    reducers: {
+        asyncUserName : (state, action) => {
+            state.nickname = localStorage.getItem("nickname");
         },
-        extraReducers: {
-            [userLogin.fulfilled]: (state, action) => {
-                state.isLoading = true;
-                state.userName = action.payload;
-            },
-            [userLogin.rejected] : (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload;
-            },
+        userLogout: (state, action) => {
+            const userToken = localStorage.setItem("aceessToken");
+            axios.delete(`/member/login`, {
+                headers: {
+                    Authorization: userToken,
+                },
+            });
+        } ,
+    },
+    extraReducers: {
+        [userLogin.fulfilled]: (state, action) => {
+            state.isLoading = true;
+            state.userName = action.payload;
         },
-    });
+        [userLogin.rejected] : (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+    },
+});
 
-export const { asyncUserName, userLogout } = userSlice.action;
+export const { asyncUserName, userLogout } = userSlice.actions;
 export default userSlice.reducer;
