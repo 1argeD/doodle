@@ -12,6 +12,7 @@ const LoginBox = () => {
     const success = useSelector((state) => state.user.userToken);
 
     const {
+      watch,  
       register,
       handleSubmit,
       formState: { isDirty, errors},
@@ -76,11 +77,10 @@ const LoginBox = () => {
                                 </InputWrapper>
                             </NavItem>
                         </Container>
-                        <LoginButton />
                     </Box>
                 </NavBar>
             </NavWapper>
-            </>
+           </>
 }
 
 export default LoginBox;
@@ -116,6 +116,9 @@ const Box = styled.div`
 `
 const Container = styled.div`
     display: flex;
+    flex-directuin:column;
+    justifiy-content: flex-start;
+    position: relative;
 `
 
 const Put = styled.div`
@@ -146,10 +149,12 @@ const InputWrapper = styled.div`
 `
 
 const Input = styled.div`
-    box-sizing: border-box
+    position: relative;
 ` 
 
 const HelperText = styled.div`
-    display: flex;
+    margin-top: 0.3rem;
+    font-size: 1.2rem;
+    color: #cbcbcb;
 `
 
