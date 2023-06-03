@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const base = {
-    server_http: Process.env
+    server_http: process.env.REACT_APP_HTTP_URI,
 };
 
 const api = axios.create({
-    baseURL: base.env.server_http,
+    baseURL: base.env.server_https,
     headers: {
         "content-type": "application/json; charset=UTF-8",
         accept:"application/json",

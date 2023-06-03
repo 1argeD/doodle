@@ -1,85 +1,96 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { createAsyncThunk } from "@reduxjs/toolkit"
-import Swal from "sweetalert2"
-import axios from "axios";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import axios from "axios"
+import { Buffer } from "buffer"
+import Login from "../../pages/login";
+import { axiosInstance } from "../../shared/axios"
 
-export const userRegister = createAsyncThunk(
-    "/member/sign",
-    async ({email, nickname, password, passwordConfirm}) => {
-        try{
-            const response = await axios.post(`/member/sign`, {
-                email : email,
-                nickname : nickname,
-                password : password,
-                passwordConfirm : passwordConfirm,
-            });
-            Swal.fire({title : "회원가입에 성공했습니다", confirmButtonColor:"#FFD68B"})
-        } catch (error) {
-            Swal.fire({title : " 빈 칸 없이 작성해주세요.", confirmButtonColor:"#FFD68B"})
-        }
+const URI = {
+  BASE: process.env.REACT_APP_BASE_URI,
+};
+
+const LOGIN = "member/login"
+
+export function UserLogin(user) {
+  console.log("Userlogin");
+  return { type:Login, user };
+}
+
+const initialState = {
+  isLogin: localStorage.getItem("AccessToken") ? true : false,
+}
+
+export const __userRegister = createAsyncThunk(
+  "/member/signup",
+  async(payload, thunkAPI) => {
+    try {
+      const response = await axios.post(`${URI.BASE}/member/siginup`, {
+        email: payload.email,
+        nickname: payload.nickname,
+        password: payload.password,
+        passwordConfigure: payload.passwordConfigure,
+      });
+
+      if(response.state == 200) {
+        alert('가입되었습니다.');
+      } else if('승인할 수 없는 계정입니다. 다시 입력하세요');
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.state);
     }
-)  
+  }
+);
 
-export const userLogin = createAsyncThunk(
-    "/member/login",
-    async (payload, thunkAPI) => {
-        try {
-            const{ email, password } = payload;
-            const datas = {email:email, password:password}
-            const {data, headers} = await axios.post('member/login', data)
-
-            let token = headers.getAuthorization
-            let nickname = data.data.nickname
-
-            localStorage.setItem("nickname", nickname)
-            localStorage.setItem("accessToken", token)
-            
-            window.localStorage.href = "/main"
-            return thunkAPI.fulfillWithValue(payload);
-        } catch(error) {
-            if(error.response.data.errormessage === "로그인에 실패하였습니다.") {
-                Swal.fire({title:"로그인에 실패했습니다.", confirmButtonColor:"#FFD68B"})
-            }
-            if(error.response.data.errormessage === "사용자가 존재하지 않습니다") {
-                Swal.fire({title:"사용자가 존재하지 않습니다.", confirmButtonColor:"#FFD68B"})
-            }
-            if(error.message === "Request failed with state code 500") {
-                Swal.fire({title: "회원정보가 없습니다. 회원가입 후 다시 시도해 주세요.", confirmButtonColor:"#FFD68B"})
-            }
-            if(error.response.data.errormessage === "삭제된 회원입니다.") {
-                Swal.fire({title:"삭제된 회원입니다.", confirmButtonColor:"#FFD68B"})
-            }
-        }
+export const __userLogin = createAsyncThunk(
+  "member/login",
+  async (payload, thunkAPI) => {
+    try {
+      const { email, password } = payload;
+      const response = await axios.post(`${URI.BASE}/member/login`, {
+        email, 
+        password,
+      });
+      
+      const accessToken = response.headers.authorization;
+      const refreshtoken = response.headers[`refresh-token`];
+      const encodeBody = accessToken.spilt(".")[1];
+      const decodeBody = new Buffer.from(encodeBody, "base64").toString("uft8");
+      const jsonBody = JSON.parse(decodeBody);
+      localStorage.setItem("userId", jsonBody.jti);
+      localStorage.setItem("userNickname", jsonBody.sub);
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshtoken", refreshtoken);
+      return thunkAPI.fulfillWithValue(jsonBody.sub);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
     }
-); 
-
+  }
+)
 
 const userSlice = createSlice({
-    name : "userSlice",
-    initialState : {},
-    reducers: {
-        asyncUserName : (state, action) => {
-            state.nickname = localStorage.getItem("nickname");
-        },
-        userLogout: (state, action) => {
-            const userToken = localStorage.setItem("aceessToken");
-            axios.delete(`/member/login`, {
-                headers: {
-                    Authorization: userToken,
-                },
-            });
-        } ,
+  name: "userSlice",
+  initialState,
+  reducers: {
+    asyncUserName: (state, action) => {
+      state.userNickname = localStorage.getItem("userNickname"); 
     },
-    extraReducers: {
-        [userLogin.fulfilled]: (state, action) => {
-            state.isLoading = true;
-            state.userName = action.payload;
+    userLogout: (state, action) => {
+      const userToken = localStorage.getItem("accessToken");
+      axios.delete(`${URI.BASE}/member/logout`, {
+        headers: {
+          Authorization: userToken,
         },
-        [userLogin.rejected] : (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-        },
+      });
     },
+  },
+  extraReducers: {
+    [__userLogin.fulfilled]: (state, action) => {
+      state.isLoading = true;
+      state.userNickname = action.payload;
+    },
+    [__userLogin.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    }
+  }
 });
 
 export const { asyncUserName, userLogout } = userSlice.actions;
