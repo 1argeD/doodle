@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import styled from "styled-components"
 
 function Header2() {
+    /*
+    hook 2개를 사용 권장 하지 않으니 후에 로그인 기능이 완성 되면 tool기능과 로그인 감지 기능을 개발 후에 
+    해당 파일은 삭제하고 GlobalHeaer에 삽입할 것
+    */
     const navigate = useNavigate();
 
     const onPathHandler = (path) => {

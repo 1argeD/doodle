@@ -1,10 +1,12 @@
 import React from 'react';
 import Header2 from '../components/CanvasHeader';
-import Painting from "../function/Canvas"
+import Painting from "../components/Painting"
 
 const Canvas = () => {
+
     return (
         <>  
+        <Header2></Header2>
             <Painting />
         </>
     )
