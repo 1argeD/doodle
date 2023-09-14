@@ -1,6 +1,8 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom'
-import styled from "styled-components"
+import { useNavigate } from 'react-router-dom';
+import HeaderLogin from '../components/button/HeaderInbutton';
+import HeaderLogOut from "./button/HeaderOutButton";
+import styled from "styled-components";
 
 function Header2() {
     /*

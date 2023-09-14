@@ -1,15 +1,36 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom'
 import styled from "styled-components"
+import { useSelector } from "react-redux";
+import { userLogOut } from "../redux/user/userAction";
+import { useForm } from "react-hook-form"
+import HeaderLogin from '../components/button/HeaderInbutton';
+import HeaderLogOut from "./button/HeaderOutButton";
 
 function Header() {
-
+    const isLogin = useSelector((state) => state.user.userToken);
     const navigate = useNavigate();
+
+    const { handleSubmit, } 
+    = useForm({ mode : "onChange" });
+
     const onPathHandler = (path) => {
         navigate(path);
     };
 
-    return (
+    const onClickSubmitHandler = () => {
+        userLogOut();
+      
+    }
+
+    let button;
+
+    if(isLogin!=null) {
+        button = <HeaderLogin/>       
+    } else {
+        button = <HeaderLogOut/>
+    } 
+        return (
             <>  
                 <NavbarWrapper>
                     <Navbar>
@@ -17,14 +38,15 @@ function Header() {
                         <NavItem>
                             <Logo onClick={() => onPathHandler("/")}>Doodle</Logo>
                         </NavItem>
-                        <NavItem>
-                            <SignIn onClick={() => onPathHandler("/login")}>Login</SignIn>
-                        </NavItem>
+                        {button}
                     </Navbar>
                 </NavbarWrapper>
             </>
-    )
+        )
+    
 }
+
+
 
 export default Header;
 
@@ -67,15 +89,6 @@ const Logo = styled.div`
     margin-right: auto;
     text-align: center;
     font-size: 3rem;
-    font-family: Ink Free;
-    height: 4.8rem;
-    color: #FFFFFF;
-`
-
-const SignIn = styled.div`
-    padding-top: 50px;
-    margin: 20px;
-    font-size: 1.5rem;
     font-family: Ink Free;
     height: 4.8rem;
     color: #FFFFFF;

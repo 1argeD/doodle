@@ -15,7 +15,7 @@ export const userSignUp = createAsyncThunk(
                     'Content-Type': 'application/json',
                 }
             };
-            const response = await axios.post(
+            const signUpResponse = await axios.post(
                 "http://localhost:8081/member/signUp",
                 payload,
                 config,
@@ -33,7 +33,6 @@ export const userSignUp = createAsyncThunk(
 export const userLogin = createAsyncThunk(
     'user/login',
     async (payload, {rejectWithValue}) => {
-
         try {
             const config = {
                 headers : {
@@ -46,7 +45,7 @@ export const userLogin = createAsyncThunk(
                 config
             );
             localStorage.setItem('access-token', response.headers.authorization);
-            localStorage.setItem('access-token', response.headers.refreshtoken);
+            localStorage.setItem('refresh-token', response.headers.refreshtoken);
             return response;
         }catch (error) {
             if(error.response && error.response.data.message) {
@@ -57,3 +56,22 @@ export const userLogin = createAsyncThunk(
         } 
     }
 )
+
+export const userLogOut = createAsyncThunk(
+    'user/logout',
+        async (arg, {rejectWithValue , fulfillWithValue}) => {
+         console.log("작동 되는 중인감?????????")
+        try{
+            const response = await apis.logout();
+            return fulfillWithValue(response.data);
+        } catch(error) {
+            if(error.message==error.data.message) {
+                return rejectWithValue(error.data.message);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    } 
+
+) 
+    

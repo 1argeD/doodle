@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {
   userSignUp,
   userLogin,
+  userLogOut,
 } from './userAction'
 
 
@@ -30,6 +31,7 @@ const userSlice = createSlice({
     [userSignUp.pending]: (state) => {
       state.loading = true;
       state.error = null;
+      state.success = true;
     },
     [userSignUp.fulfilled]: (state, {payload}) => {
       state.loading = false;
@@ -38,6 +40,7 @@ const userSlice = createSlice({
     [userSignUp.rejected]: (state, {payload}) => {
       state.loading = false;
       state.error = payload;
+      state.success = false;
     },
 
     //유저 로그인
@@ -58,6 +61,25 @@ const userSlice = createSlice({
       state.loginSuccess =false;
     },
     
+    //유저 로그아웃
+    [userLogOut.pending]: (state) => {
+      state.loading = false;
+      state.error = null;
+    },
+    [userLogOut.fulfilled]: (state) => {
+      localStorage.removeItem('user-info');
+      localStorage.removeItem('access-token');
+      localStorage.removeItem('refresh-token');
+      state.loading = false;
+      state.userInfo = null;
+      state.error = null;
+      state.loginSuccess = false;
+    },
+    [userLogOut.rejected] : (state, {payload}) => {
+      state.loading = false;
+      state.error =payload;
+    },
+
   }
 })
 

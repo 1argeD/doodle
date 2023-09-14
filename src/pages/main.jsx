@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/GlobalHeader";
-import ProjectButton from "../components/ProjectButton";
+import ProjectButton from "../components/button/ProjectButton";
 
 const Main = () => {
     return (

@@ -11,6 +11,7 @@ function LoginBox() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const success = useSelector((state) => state.user.userToken);
+    console.log(success);
     
     //메소드 가져오기
     const {
@@ -22,7 +23,7 @@ function LoginBox() {
 
     const onSubmit= () => {
         const body = {
-            email : watch().email,
+            email : watch().userId,
             password: watch().password,
         };
         console.log(body);
@@ -43,19 +44,19 @@ function LoginBox() {
         <FormWarapper>
             <Form onSubmit={handleSubmit(onSubmit, onError)}>
             <New>Login</New>
-            <Text>Email: </Text>
+            <Text>Email : </Text>
             <InputWrapper>
             <input
            type = "text" 
            tabIndex="2"
            className="input"
-           {...register("email", {
+           {...register("userId", {
                require: "가입한 이메일을 적어주세요.",
            })} 
            aria-invalid={
-               !isDirty ? undefined : errors.email ? true : false
+               !isDirty ? undefined : errors.userId ? true : false
            }
-           name = "uemail"
+           name = "userId"
             />
             {errors.userId && (
                 <>{errors?.userId.message}</>
