@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {
+  userSignUp,
   userLogin,
 } from './userAction'
 
@@ -17,7 +18,7 @@ const initialState = {
   success : false,
   loginSuccess : false,
   logoutInfo: {},
-  registerSuccess : false,
+  signUpSuccess : false,
 };
 
 const userSlice = createSlice({
@@ -25,6 +26,21 @@ const userSlice = createSlice({
   initialState,
   reducers : {},
   extraReducers: {
+    //유저 회원가입
+    [userSignUp.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [userSignUp.fulfilled]: (state, {payload}) => {
+      state.loading = false;
+      state.signUpSuccess = payload.success; 
+    },
+    [userSignUp.rejected]: (state, {payload}) => {
+      state.loading = false;
+      state.error = payload;
+    },
+
+    //유저 로그인
     [userLogin.pending]: (state) => {
       state.loading = true;
       state.error = null;
@@ -32,14 +48,19 @@ const userSlice = createSlice({
     [userLogin.fulfilled]: (state, {payload}) => {
       state.loading = false;
       state.userInfo = payload.data;
-      localStorage.setItem('user-info' ,JSON.stringify(payload.data));
+      localStorage.setItem('user-info' , JSON.stringify(payload.data));
       state.userToken = payload.headers.authorization;
-      state.success = true;
-    }
-
+      state.loginSuccess = true;
+    },
+    [userLogin.rejected]: (state,{payload}) => {
+      state.loading = false;
+      state.error = payload;
+      state.loginSuccess =false;
+    },
+    
   }
 })
 
-export const {user} = userSlice.actions;
+export const {} = userSlice.actions;
 
 export default userSlice.reducer;

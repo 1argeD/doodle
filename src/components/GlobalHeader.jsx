@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import styled from "styled-components"
 
 function Header() {
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
     const onPathHandler = (path) => {
         navigate(path);
     };

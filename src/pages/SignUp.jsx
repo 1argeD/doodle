@@ -1,13 +1,12 @@
 import React from "react";
 import Header from '../components/GlobalHeader';
-import SignUp from "../components/SingnBox";
+import SignUp from "../components/SignUpBox";
 import styled from "styled-components";
 
 const SighnUp = () => {
     return (
         <>  
             <Header/>
-            <h3>회원가입 페이지</h3>
             <SighnLayout>
             <SignUp></SignUp>
             </SighnLayout>
