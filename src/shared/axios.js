@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const base = {
-    sever_http:"localhsot:8081",
+    sever_http:"http://localhsot:8081",
 }
 
 const api = axios.create({
@@ -48,5 +48,5 @@ api.interceptors.response.use(
 );
 
 export const apis = {
-    logout : () => api.post(`/member/logout`),
+    logout: () => api.post(`/members/logout`),
 }

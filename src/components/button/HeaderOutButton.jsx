@@ -1,17 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector} from "react-redux";
+import { userLogOut } from "../../redux/user/userAction";
+
+
 
 function HeaderLogOut() {
     const navigate = useNavigate();
-    
-    const onPathHandler = (path) => {
-        navigate(path);
-    };
+    const dispatch = useDispatch();
+    const logoutInfo = useSelector((state) => state.user.logoutInfo);
+    console.log("로그아웃인포 : ",logoutInfo);
+    const onClickSubmitHandler = () => {
+        
+        if(logoutInfo) {
+            dispatch(userLogOut());
+            navigate("/");
+        }
+    }
 
     return (
         <NavItem>
-            <SignIn onClick={() => onPathHandler("/login")}>Logout</SignIn>
+            <SignIn onClick={onClickSubmitHandler}>Logout</SignIn>
         </NavItem>
     )
 }

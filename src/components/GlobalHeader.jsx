@@ -1,14 +1,15 @@
-import React from "react";
+import React,{useState} from "react";
 import { useNavigate } from 'react-router-dom'
 import styled from "styled-components"
 import { useSelector } from "react-redux";
-import { userLogOut } from "../redux/user/userAction";
+
 import { useForm } from "react-hook-form"
 import HeaderLogin from '../components/button/HeaderInbutton';
 import HeaderLogOut from "./button/HeaderOutButton";
 
 function Header() {
-    const isLogin = useSelector((state) => state.user.userToken);
+    const token = localStorage.getItem("access-token");
+
     const navigate = useNavigate();
 
     const { handleSubmit, } 
@@ -18,17 +19,12 @@ function Header() {
         navigate(path);
     };
 
-    const onClickSubmitHandler = () => {
-        userLogOut();
-      
-    }
-
     let button;
 
-    if(isLogin!=null) {
-        button = <HeaderLogin/>       
-    } else {
+    if(token) {
         button = <HeaderLogOut/>
+    } else {
+        button = <HeaderLogin />
     } 
         return (
             <>  

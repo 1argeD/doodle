@@ -58,15 +58,26 @@ export const userLogin = createAsyncThunk(
 )
 
 export const userLogOut = createAsyncThunk(
-    'user/logout',
-        async (arg, {rejectWithValue , fulfillWithValue}) => {
-         console.log("작동 되는 중인감?????????")
+    'user/logout', 
+        async (payload, {getState, rejectWithValue , fulfillWithValue}) => {
+            const {user} = getState();
         try{
-            const response = await apis.logout();
+            const config = {
+                headers : {
+                    'Authorization' : localStorage.getItem('access-token'),
+                    'Refresh-Token' : localStorage.getItem('refresh-token'),
+                    'Content-type' : 'application/json',
+                },
+            };
+            const response = await  axios.post(
+                "http://localhost:8081/member/logout",
+                payload,
+                config
+            );
             return fulfillWithValue(response.data);
         } catch(error) {
-            if(error.message==error.data.message) {
-                return rejectWithValue(error.data.message);
+            if(error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message);
             } else {
                 return rejectWithValue(error.message);
             }

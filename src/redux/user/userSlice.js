@@ -66,18 +66,18 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
-    [userLogOut.fulfilled]: (state) => {
+    [userLogOut.fulfilled]: (state,{payload}) => {
       localStorage.removeItem('user-info');
       localStorage.removeItem('access-token');
       localStorage.removeItem('refresh-token');
       state.loading = false;
-      state.userInfo = null;
+      state.logoutInfo = payload;
+      state.userToken = null;
       state.error = null;
-      state.loginSuccess = false;
     },
     [userLogOut.rejected] : (state, {payload}) => {
       state.loading = false;
-      state.error =payload;
+      state.error = payload;
     },
 
   }
