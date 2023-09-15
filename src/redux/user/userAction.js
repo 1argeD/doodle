@@ -7,7 +7,7 @@ const URL = {
 };
 
 export const userSignUp = createAsyncThunk(
-    'user/signUp',
+    'user/sign-up',
     async(payload, {rejectWithValue}) => {
         try{
             const config = {
@@ -16,7 +16,7 @@ export const userSignUp = createAsyncThunk(
                 }
             };
             const signUpResponse = await axios.post(
-                "http://localhost:8081/member/signUp",
+                "http://localhost:8081/member/sign-up",
                 payload,
                 config,
             )
