@@ -1,4 +1,5 @@
 import React from "react";
+import { useForm } from "react-hook-form"
 import { useNavigate } from 'react-router-dom';
 import HeaderLogin from '../components/button/HeaderInbutton';
 import HeaderLogOut from "./button/HeaderOutButton";
@@ -9,29 +10,40 @@ function Header2() {
     hook 2개를 사용 권장 하지 않으니 후에 로그인 기능이 완성 되면 tool기능과 로그인 감지 기능을 개발 후에 
     해당 파일은 삭제하고 GlobalHeaer에 삽입할 것
     */
+    const token = localStorage.getItem("access-token");
+
     const navigate = useNavigate();
+
+    const { handleSubmit, } 
+    = useForm({ mode : "onChange" });
 
     const onPathHandler = (path) => {
         navigate(path);
     };
+
+    let button;
+
+    if(token) {
+        button = <HeaderLogOut/>
+    } else {
+        button = <HeaderLogin />
+    } 
 
     return (
             <>  
                 <NavbarWrapper>
                     <Navbar>
                         <NavItem>
-                            <Tool>Tool</Tool>
+                            <Tool>tool</Tool>
                         </NavItem>
                         <NavItem>
                             <Logo onClick={() => onPathHandler("/")}>Doodle</Logo>
                         </NavItem>
-                        <NavItem>
-                            <SignIn onClick={() => onPathHandler("/login")}>Login</SignIn>
-                        </NavItem>
+                        {button}
                     </Navbar>
                 </NavbarWrapper>
             </>
-    )
+        )
 }
 
 export default Header2;
