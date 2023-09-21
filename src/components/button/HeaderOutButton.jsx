@@ -11,6 +11,7 @@ function HeaderLogOut() {
 
     const onClickSubmitHandler = () => {
         if(logoutInfo) {
+            console.log("한번 로그아웃하면 다시 로그아웃 못하는 에러가 있음 수정해야기에 필요한 로그 ----------");
             dispatch(userLogOut());
             window.location.href = "/";
         }
