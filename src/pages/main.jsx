@@ -1,12 +1,12 @@
 import React from "react";
 import Header from "../components/GlobalHeader";
-import ProjectButton from "../components/button/ProjectButton";
+import ProjectMain from "../components/main/ProjectMain";
 
 const Main = () => {
     return (
         <>
             <Header/>
-            <ProjectButton />
+            <ProjectMain />
         </>
     )
 }

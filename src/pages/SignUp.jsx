@@ -1,6 +1,6 @@
 import React from "react";
 import Header from '../components/GlobalHeader';
-import SignUp from "../components/SignUpBox";
+import SignUp from "../components/loginPage/SignUpBox";
 import styled from "styled-components";
 
 const SighnUp = () => {

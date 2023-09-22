@@ -24,47 +24,49 @@ export const canvasSlice = createSlice({
     name : "canvas",
     initialState,
     reducers: {},
-    extraReducers : {
+    extraReducers : (builder) => {
+        builder
         //캔버스 생성
-        [postCanvas.pending]: (state) => {
-            state.isloading = true;
-        },
-        [postCanvas.fulfilled]: (state, action) => {
-            state.isloading = false,
-            state.canvas = [...state.canvas, action.payload];
-        },
-        [postCanvas.rejected]: (state, action) => {
-            state.isloading = false;
-            state.error = action.payload;
-        },
+            .addCase(postCanvas.pending, (state)=> {
+                state.isloading = true;
+            })
+            .addCase(postCanvas.fulfilled, (state, action)=> {
+                state.isloading = false,
+                state.canvas = [...state.canvas, action.payload];
+            })
+            .addCase(postCanvas.rejected, (state, action)=> {
+                state.isloading = false;
+                state.error = action.payload;
+            }) 
+       
         //캔버스 목록 가져오기
-        [getCanvas.pending]: (state) => {
+        .addCase(getCanvas.pending, (state)=> {
             state.isloading = true;
-        },
-        [getCanvas.fulfilled]: (state, action) => {
+        })
+        .addCase(getCanvas.fulfilled, (state, action)=> {
             state.isloading = false;
             state.canvas = action.payload;
-        },
-        [getCanvas.rejected]: (state) => {
+        })
+        .addCase(getCanvas.rejected, (state)=> {
             state.isloading = true;
-        },
+        })
         //캔버스 단일 조회
-        [getCanvasList.pending]: (state) => {
+        .addCase(getCanvasList.pending, (state)=> {
             state.isloading = true;
-        },
-        [getCanvasList.fulfilled]: (state, action) => {
+        })
+        .addCase(getCanvasList.fulfilled, (state, action)=> {
             state.isloading = false;
             state.list = state.list.concat(action.payload);
-        },
-        [getCanvasList.rejected]: (state, action) => {
+        })
+        .addCase(getCanvasList.rejected, (state, action)=> {
             state.isloading = false;
             state.error = action.payload;
-        },
+        })
         //캔버스 수정하기
-        [putCanvas.pending]: (state) => {
+        .addCase(putCanvas.pending, (state)=> {
             state.isloading = true;
-        },
-        [putCanvas.fulfilled]: (state, action) => {
+        })
+        .addCase(putCanvas.fulfilled, (state, action)=> {
             state.isloading = false;
             state.canvas = state.canvas.map((canvas) =>
                 canvas.canvasId === action.payload.canvasId
@@ -74,10 +76,13 @@ export const canvasSlice = createSlice({
                 }
                 : canvas
             )
-        },
-        [putCanvas.rejected]: (state, action) => {
+        })
+        .addCase(putCanvas.rejected, (state, action)=> {
             state.isloading = false;
             state.error = action.payload;
-        },
+        })
     }
 })
+
+export const{} = canvasSlice.actions
+export default canvasSlice.reducer

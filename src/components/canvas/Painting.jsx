@@ -27,7 +27,6 @@ function Painting() {
         const canvas = canvasRef.current;
         canvas.width = canvas_style.width.replace("px","");
         canvas.height = canvas_style.height.replace("px","");
-        console.log("캔버스 크기 보기",canvas);
         const ctx = canvas.getContext("2d");
         ctx.lineJoin = "round";
         ctx.lineWidth = 2.5;
@@ -37,9 +36,7 @@ function Painting() {
 
     const drawFn = e => {
         const mouseX = e.nativeEvent.offsetX;
-        console.log("x좌표확인",mouseX);
         const mouseY = e.nativeEvent.offsetY;
-        console.log("y좌표확인",mouseY);
         if(!Painting) {
             getCtx.beginPath();
             getCtx.moveTo(mouseX,mouseY);

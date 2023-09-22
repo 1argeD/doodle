@@ -9,21 +9,26 @@ function Header() {
     const token = localStorage.getItem("access-token");
 
     const navigate = useNavigate();
+    let button;
+
 
     const { handleSubmit, } 
     = useForm({ mode : "onChange" });
+
+    const loginStatusCHK = () => {
+        window.location.reload();
+    }
 
     const onPathHandler = (path) => {
         navigate(path);
     };
 
-    let button;
-
     if(token) {
-        button = <HeaderLogOut/>
+        button = <HeaderLogOut onClick={handleSubmit(loginStatusCHK)}/>
     } else {
         button = <HeaderLogin />
     } 
+
         return (
             <>  
                 <NavbarWrapper>

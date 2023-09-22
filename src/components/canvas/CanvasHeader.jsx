@@ -1,8 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form"
 import { useNavigate } from 'react-router-dom';
-import HeaderLogin from '../components/button/HeaderInbutton';
-import HeaderLogOut from "./button/HeaderOutButton";
+import HeaderLogin from '../button/HeaderInbutton';
+import HeaderLogOut from "../button/HeaderOutButton";
 import styled from "styled-components";
 
 function Header2() {

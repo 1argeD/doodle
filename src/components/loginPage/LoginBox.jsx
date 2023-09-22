@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
 import styled from "styled-components"
-import { userLogin } from "../redux/user/userAction";
+import { userLogin } from "../../redux/user/userAction";
 
 
 function LoginBox() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const success = useSelector((state) => state.user.userToken);
-    console.log(success);
+    const token = useSelector((state) => state.user.userToken);
+    console.log(token);
     
     //메소드 가져오기
     const {
@@ -35,18 +35,22 @@ function LoginBox() {
     }
 
     useEffect(() => {
-        if(success) {
+        if(token) {
             navigate("/");
         }
-    }, [success, navigate]);
+    }, [token, navigate]);
 
-    return(
+    const onPath = () => {
+        navigate("/sign-up")
+    }
+
+    return(   
         <FormWarapper>
             <Form onSubmit={handleSubmit(onSubmit, onError)}>
             <New>Login</New>
             <Text>Email : </Text>
             <InputWrapper>
-            <input
+            <Input 
            type = "text" 
            tabIndex="2"
            className="input"
@@ -64,7 +68,7 @@ function LoginBox() {
             </InputWrapper>
             <Text>PW : </Text>
             <InputWrapper>
-            <input 
+            <Input 
             type = "password" 
             tabIndex="2"
             className="input"
@@ -80,10 +84,11 @@ function LoginBox() {
                 <>{errors?.password.message}</>
             )}
             </InputWrapper>
-            <button>로그인</button>
+            <Button>로그인</Button>
             </Form>
-            <button>회원가입</button>
+            <Button onClick={handleSubmit(onPath)}>회원가입</Button>
         </FormWarapper>
+        
     ); 
 };
 
@@ -107,6 +112,12 @@ const Text = styled.text`
 const Form = styled.form`
     display : flex;
     flex-direction: column;
+`
+const Input = styled.input`
+    display : flex;
+`
+const Button = styled.button`
+    display : flex;
 `
 
 const New = styled.h1`

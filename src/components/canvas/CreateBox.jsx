@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import {postCanvas} from "../redux/canvas/canvasAction"
+import {postCanvas} from "../../redux/canvas/canvasAction"
 
 
 function CreateBox() {
@@ -23,7 +23,6 @@ function CreateBox() {
             canvasTitle : watch().canvasTitle,
             with : {},
         }
-        console.log(body);
         dispatch(postCanvas(body));
     }
 

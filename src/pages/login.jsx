@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginBox from '../components/LoginBox'
+import LoginBox from '../components/loginPage/LoginBox'
 import styled from 'styled-components';
 import Header from '../components/GlobalHeader';
 

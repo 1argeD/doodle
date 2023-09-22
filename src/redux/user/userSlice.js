@@ -26,47 +26,50 @@ const userSlice = createSlice({
   name : 'user',
   initialState,
   reducers : {},
-  extraReducers: {
+  extraReducers: (builder) =>{
+    builder
     //유저 회원가입
-    [userSignUp.pending]: (state) => {
-      state.loading = true;
-      state.error = null;
-      state.success = true;
-    },
-    [userSignUp.fulfilled]: (state, {payload}) => {
-      state.loading = false;
-      state.signUpSuccess = payload.success; 
-    },
-    [userSignUp.rejected]: (state, {payload}) => {
-      state.loading = false;
-      state.error = payload;
-      state.success = false;
-    },
+      .addCase(userSignUp.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.signUpSuccess = true;
+      })
+      .addCase(userSignUp.fulfilled, (state, {payload}) => {
+        state.loading = false;
+        state.signUpSuccess = payload.signUpSuccess; 
+      }) 
+      .addCase(userSignUp.rejected, (state, {payload}) => {
+        state.loading = false;
+        state.error = payload;
+        state.success = false; 
+      }) 
 
     //유저 로그인
-    [userLogin.pending]: (state) => {
+    .addCase(userLogin.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [userLogin.fulfilled]: (state, {payload}) => {
+    })
+    .addCase(userLogin.fulfilled, (state, {payload}) => {
       state.loading = false;
       state.userInfo = payload.data;
       localStorage.setItem('user-info' , JSON.stringify(payload.data));
       state.userToken = payload.headers.authorization;
+      state.success = payload.data.success;
       state.loginSuccess = true;
-    },
-    [userLogin.rejected]: (state,{payload}) => {
+    })
+    .addCase(userLogin.rejected, (state,{payload}) => {
       state.loading = false;
       state.error = payload;
+      state.success = false;
       state.loginSuccess =false;
-    },
+    })
     
     //유저 로그아웃
-    [userLogOut.pending]: (state) => {
+    .addCase(userLogOut.pending, (state) => {
       state.loading = false;
       state.error = null;
-    },
-    [userLogOut.fulfilled]: (state,{payload}) => {
+    })
+    .addCase(userLogOut.fulfilled, (state,{payload}) => {
       localStorage.removeItem('user-info');
       localStorage.removeItem('access-token');
       localStorage.removeItem('refresh-token');
@@ -74,12 +77,11 @@ const userSlice = createSlice({
       state.logoutInfo = payload;
       state.userToken = null;
       state.error = null;
-    },
-    [userLogOut.rejected] : (state, {payload}) => {
+    })
+    .addCase(userLogOut.rejected, (state, {payload}) => {
       state.loading = false;
       state.error = payload;
-    },
-
+    })
   }
 })
 

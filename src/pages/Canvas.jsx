@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../components/CanvasHeader';
-import Painting from "../components/Painting"
+import Header from '../components/canvas/CanvasHeader';
+import Painting from "../components/canvas/Painting"
 
 const Canvas = () => {
 

@@ -1,11 +1,13 @@
-import react,{useEffect} from "react";
+import react from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form" 
-import { useDispatch, useSelector } from "react-redux";
-import { userSignUp } from "../redux/user/userAction";
+import { useDispatch} from "react-redux";
+import { userSignUp } from "../../redux/user/userAction";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -32,6 +34,10 @@ const SignUp = () => {
 
     const onError = (errors) => {
         console.log(errors);
+    }
+
+    const onPath = () => {
+        navigate("/login")
     }
 
     return <>
@@ -87,7 +93,7 @@ const SignUp = () => {
                 }
                 name = "passwordConfirm"
                 /><br/>
-                <button>가입완료</button><button herf = "/login">로그인페이지로</button>
+                <button>가입완료</button><button onClick={handleSubmit(onPath)}>로그인페이지로</button>
                 </From>
             </FormWapper>
           </SignUpBox>
