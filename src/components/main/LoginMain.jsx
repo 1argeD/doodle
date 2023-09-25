@@ -1,18 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import CanvasBox from "../canvas/CanvasListBox";
-import SelectButton from "../button/Clickbutton"
+import SelectButton from "../button/Clickbutton";
 
 
 const LoginMain = () => {
+
+
     return(<>
              <Wrapper>
-            지금 되는중이다
-            <CanvasBox />
+            <CanvasBox/>
                 <Wrapper2>
-                <SelectButton></SelectButton>
-                <SelectButton></SelectButton>
-                <SelectButton></SelectButton>
+                <SelectButton value={"New"} ></SelectButton>
+                <SelectButton value={"Enter"}></SelectButton>
+                <SelectButton value={"Delete"}></SelectButton>
                 </Wrapper2>
             </Wrapper>
         </>
@@ -23,11 +24,8 @@ export default LoginMain
 
 const Wrapper = styled.div`
     display : flex;
+    margin-left : 130px;
 `
 
 const Wrapper2 = styled.div`
-`
-
-const Text = styled.text`
-    font-family: Ink Free;
 `

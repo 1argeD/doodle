@@ -17,8 +17,9 @@ function HeaderLogOut() {
     const dispatch = useDispatch();
 
     const onClickSubmitHandler = () => {
-        dispatch(userLogOut());
-        window.location.reload();
+        if(dispatch(userLogOut())){
+            window.location.reload();   
+        }
     }
 
 

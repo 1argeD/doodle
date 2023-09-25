@@ -2,9 +2,8 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { apis } from "../../shared/axios";
 
-const URL = {
-    baseURL: "localhost:8081"
-};
+const URL = "http://localhost:8081"
+
 
 export const userSignUp = createAsyncThunk(
     'user/sign-up',
@@ -16,10 +15,11 @@ export const userSignUp = createAsyncThunk(
                 }
             };
             const signUpResponse = await axios.post(
-                "http://localhost:8081/member/sign-up",
+                URL+"/member/sign-up",
                 payload,
                 config,
             )
+            return signUpResponse;
         } catch(error) {
             if(error.response&&error.response.data.message) {
                 return rejectWithValue(error.data.message);
@@ -40,7 +40,7 @@ export const userLogin = createAsyncThunk(
                 },
             };
             const response = await axios.post(
-                "http://localhost:8081/member/login",
+                URL+`/member/login`,
                 payload,
                 config
             );
@@ -70,7 +70,7 @@ export const userLogOut = createAsyncThunk(
                 },
             };
             const response = await  axios.post(
-                "http://localhost:8081/member/logout",
+                URL+`/member/logout`,
                 payload,
                 config
             );

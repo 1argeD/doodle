@@ -5,10 +5,10 @@ import {
     getCanvasList,
     putCanvas,
 } from "./canvasAction";
-import axios from "axios";
+
 
 const initialState = {
-    title : [],
+    title : null,
     list:[],
     isloading : false,
     error : null,
@@ -40,6 +40,18 @@ export const canvasSlice = createSlice({
             }) 
        
         //캔버스 목록 가져오기
+        .addCase(getCanvasList.pending, (state)=> {
+            state.isloading = true;
+        })
+        .addCase(getCanvasList.fulfilled, (state, action)=> {
+            state.isloading = false,
+            state.list = state.list.concat(action.data);
+        })
+        .addCase(getCanvasList.rejected, (state, action)=> {
+            state.isloading = true,
+            state.error = action.payload;
+        })
+        //캔버스 단일 조회
         .addCase(getCanvas.pending, (state)=> {
             state.isloading = true;
         })
@@ -48,19 +60,7 @@ export const canvasSlice = createSlice({
             state.canvas = action.payload;
         })
         .addCase(getCanvas.rejected, (state)=> {
-            state.isloading = true;
-        })
-        //캔버스 단일 조회
-        .addCase(getCanvasList.pending, (state)=> {
-            state.isloading = true;
-        })
-        .addCase(getCanvasList.fulfilled, (state, action)=> {
             state.isloading = false;
-            state.list = state.list.concat(action.payload);
-        })
-        .addCase(getCanvasList.rejected, (state, action)=> {
-            state.isloading = false;
-            state.error = action.payload;
         })
         //캔버스 수정하기
         .addCase(putCanvas.pending, (state)=> {

@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-
+import CanvasListBox from "./CanvasBox";
 
 const CanvasBox = () => {
     return (
         <>
-        <Box></Box>
+        <Box>
+            <CanvasListBox  />
+        </Box>
         </>
     )
 } 
@@ -14,8 +16,7 @@ const CanvasBox = () => {
 export default CanvasBox;
 
 const Box = styled.div`
-    margin-top : 40px;
-    margin-left : 10px;
+    margin-top : 100px;
     width : 70vw;
     height : 40vw;
     background-color : #373737;

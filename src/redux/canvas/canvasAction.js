@@ -24,7 +24,7 @@ export const postCanvas = createAsyncThunk(
                 }
                
             )
-            return response.data;
+            return response.payload;
         } catch(error) {
                 return rejectWithValue(error);
         }
@@ -32,26 +32,33 @@ export const postCanvas = createAsyncThunk(
 
 )
 //canvas 목록 가져오기
-export const getCanvas = createAsyncThunk(
+export const getCanvasList = createAsyncThunk(
     '/get/canvasData',
-    async(payload, thunkApi) => {
+    async(thunkApi,{fulfillWithValue}) => {
         try{
             const response = await axios.get(
-                url+`/canvas/get/${payload.canvasId}`,
+                url+"/canvas/get",
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization : localStorage.getItem("access-token"),
+                        RefreshToken : localStorage.getItem("refresh-token"),
+                    },
+                }
             );
-            return thunkApi.fulfillWithValue(response.data.canvas)
-        }catch(error){
+            return response.data;
+        }catch(error){  
             return thunkApi.rejectWithValue(error);
         }
     }
 )
 //canvas 단일 조회
-export const getCanvasList = createAsyncThunk(
+export const getCanvas = createAsyncThunk(
     'get/canvasListData',
-    async(thunkApi) => {
+    async(payload,thunkApi) => {
         try{
             const {data} = await axios.get(
-                url+`canvas/get`,
+                url+`canvas/get/${payload.canvasId}`,
             );
             if(!data) {
                 return;
