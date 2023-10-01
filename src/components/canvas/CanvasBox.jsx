@@ -10,7 +10,7 @@ function CanvasListBox() {
 
     const body = dispatch(getCanvasList());
     const [data, setData] = useState(null);
-    const [isMouse, setIsMouse] = useState(false);
+    const [isMouse, setIsMouse] = useState(null);
     
     useEffect(()=>{
         const getData = () => {
@@ -22,11 +22,8 @@ function CanvasListBox() {
     },[])
 
    
-    const onMouseHandler = (isMouse, data) => {
-        console.log("데이터 정보확인 : ", data)
-        console.log("온 마우스 확인");
-        setIsMouse(!isMouse);
-        console.log("마우스가 올라갔을때 : ",isMouse);
+    const onMouseHandler = (data) => {
+        setIsMouse(data);
     }
 
     const onClickHandler = (props) => {
@@ -40,7 +37,7 @@ function CanvasListBox() {
                     <ListBox 
                     id = {data.id}
                     isMouse = {isMouse}
-                    onMouseOver={() => onMouseHandler(isMouse, data.id)} 
+                    onMouseOver={() => onMouseHandler(data.id)} 
                     onClick={() => onClickHandler(data.id)}>
                         <Text data={data} key={data.id}>title : {data.canvasTitle}</Text>
                     </ListBox>
@@ -68,8 +65,8 @@ const ListBox = styled.div`
     width : 60vw;
     height : 10vw;
     background-color : #FFFFFF; 
-    border : ${({isMouse}) =>
-    isMouse ? "solid 1px #FFFFFF" : "solid 5px green"
+    border : ${({isMouse, id}) =>
+    isMouse===id ? "solid 1px #FFFFFF" : "solid 5px green"
 }
 `
 
