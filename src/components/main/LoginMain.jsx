@@ -6,7 +6,6 @@ import SelectButton from "../button/Clickbutton";
 
 const LoginMain = () => {
 
-
     return(<>
              <Wrapper>
             <CanvasBox/>

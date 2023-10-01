@@ -30,6 +30,7 @@ function HeaderLogOut() {
     )
 }
 
+
 export default HeaderLogOut;
 
 const NavItem = styled.div`

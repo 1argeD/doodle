@@ -14,6 +14,7 @@ function LoginBox() {
     console.log(token);
     
     //메소드 가져오기
+    
     const {
         register,//폼들의 유효성을 확인
         handleSubmit,//품을 제출하기 위한 함수

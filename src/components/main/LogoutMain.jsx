@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const LogOutMain = () => {
+
+    
     const token = localStorage.getItem("access-token");
 
     const navigate = useNavigate();

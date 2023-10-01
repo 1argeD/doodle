@@ -2,7 +2,9 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { apis } from "../../shared/axios";
 
+
 const URL = "http://localhost:8081"
+
 
 
 export const userSignUp = createAsyncThunk(
@@ -30,6 +32,7 @@ export const userSignUp = createAsyncThunk(
     }
 )
 
+
 export const userLogin = createAsyncThunk(
     'user/login',
     async (payload, {rejectWithValue}) => {
@@ -56,6 +59,7 @@ export const userLogin = createAsyncThunk(
         } 
     }
 )
+
 
 export const userLogOut = createAsyncThunk(
     'user/logout', 

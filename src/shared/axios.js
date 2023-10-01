@@ -1,8 +1,10 @@
 import axios from "axios";
 
+
 const base = {
     sever_http:"http://localhsot:8081",
 }
+
 
 const api = axios.create({
     baseURL : base.sever_http,
@@ -12,6 +14,7 @@ const api = axios.create({
         withCredentials : true,
     } 
 });
+
 
 api.interceptors.request.use(function (config) {
     const auth = localStorage.getItem("access-token");

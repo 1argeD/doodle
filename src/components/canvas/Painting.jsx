@@ -3,7 +3,9 @@ import SockJS from "sockjs-client";
 import styled from "styled-components";
 
 
+
 function Painting() {
+    
     //로그인
     // const token = localStorage.getItem('access-token');
 

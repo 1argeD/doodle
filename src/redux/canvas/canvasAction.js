@@ -5,9 +5,6 @@ import thunk from "redux-thunk";
 
 const  url = "http://localhost:8081";
 
-
-
-
 export const postCanvas = createAsyncThunk(
     'post/canvas',
     async(payload, {rejectWithValue}) => {

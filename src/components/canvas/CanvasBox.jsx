@@ -52,7 +52,6 @@ function CanvasListBox() {
     }
 }
  
-        
 
 export default CanvasListBox;
 

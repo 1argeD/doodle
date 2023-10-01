@@ -6,6 +6,7 @@ import { userSignUp } from "../../redux/user/userAction";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -15,6 +16,7 @@ const SignUp = () => {
         watch,
         formState : {isDirty,errors},
     } = useForm({mode : "onChange"})
+    
     
     const onSubmit = () => {
         

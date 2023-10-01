@@ -6,6 +6,7 @@ import {
 } from './userAction'
 
 
+
 const initialState = {
   loading : false,
   userInfo : null,
@@ -21,6 +22,7 @@ const initialState = {
   logoutInfo: {},
   signUpSuccess : false,
 };
+
 
 const userSlice = createSlice({
   name : 'user',
@@ -85,6 +87,8 @@ const userSlice = createSlice({
   }
 })
 
+
 export const {} = userSlice.actions;
+
 
 export default userSlice.reducer;

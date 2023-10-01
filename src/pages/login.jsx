@@ -5,6 +5,8 @@ import Header from '../components/GlobalHeader';
 
 
 const Loginpage = () => {
+
+    
     return  <>  <Header/>
                 <LoginLayout>
                     <LoginBox/>

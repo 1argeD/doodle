@@ -4,6 +4,8 @@ import SignUp from "../components/loginPage/SignUpBox";
 import styled from "styled-components";
 
 const SighnUp = () => {
+
+
     return (
         <>  
             <Header/>
@@ -12,6 +14,7 @@ const SighnUp = () => {
             </SighnLayout>
         </>
     )
+    
 }
 
  export default SighnUp;

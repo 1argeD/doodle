@@ -5,10 +5,12 @@ import styled from "styled-components";
 import {postCanvas} from "../../redux/canvas/canvasAction"
 
 
+
 function CreateBox() {
     
     const dispatch = useDispatch();
 
+    
     const {
         register,
         watch,
