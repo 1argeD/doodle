@@ -7,7 +7,6 @@ import styled from "styled-components";
 
 
 function Header2() {
-    
     const token = localStorage.getItem("access-token");
 
     const navigate = useNavigate();

@@ -7,7 +7,6 @@ import {
 } from "./canvasAction";
 
 
-
 const initialState = {
     title : null,
     list:[],
@@ -20,7 +19,6 @@ const initialState = {
         ? localStorage.getItem("refresh-token")
         :null,
 }
-
 
 export const canvasSlice = createSlice({
     name : "canvas",

@@ -6,14 +6,11 @@ import HeaderLogin from '../components/button/HeaderInbutton';
 import HeaderLogOut from "./button/HeaderOutButton";
 
 function Header() {
-
-
     const token = localStorage.getItem("access-token");
 
     const navigate = useNavigate();
-    
-    let button;
 
+    let button;
 
     const { handleSubmit, } 
     = useForm({ mode : "onChange" });

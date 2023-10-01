@@ -27,7 +27,7 @@ function CanvasListBox() {
     }
 
     const onClickHandler = (props) => {
-        
+          
     }
 
     if(data) {
@@ -51,8 +51,6 @@ function CanvasListBox() {
         )
     }
 }
- 
-
 export default CanvasListBox;
 
 const ListBox = styled.div`

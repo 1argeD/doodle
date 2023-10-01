@@ -6,7 +6,6 @@ import {
 } from './userAction'
 
 
-
 const initialState = {
   loading : false,
   userInfo : null,
@@ -89,6 +88,5 @@ const userSlice = createSlice({
 
 
 export const {} = userSlice.actions;
-
 
 export default userSlice.reducer;

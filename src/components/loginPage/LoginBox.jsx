@@ -7,14 +7,12 @@ import { userLogin } from "../../redux/user/userAction";
 
 
 function LoginBox() {
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const token = useSelector((state) => state.user.userToken);
     console.log(token);
     
     //메소드 가져오기
-    
     const {
         register,//폼들의 유효성을 확인
         handleSubmit,//품을 제출하기 위한 함수

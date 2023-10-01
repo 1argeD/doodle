@@ -5,7 +5,6 @@ import SelectButton from "../button/Clickbutton";
 
 
 const LoginMain = () => {
-
     return(<>
              <Wrapper>
             <CanvasBox/>
@@ -18,8 +17,8 @@ const LoginMain = () => {
         </>
         )
 }
-
 export default LoginMain
+
 
 const Wrapper = styled.div`
     display : flex;

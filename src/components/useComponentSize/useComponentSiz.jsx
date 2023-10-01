@@ -1,12 +1,12 @@
 import { useState,useEffect } from "react";
 
 const useComponentSize = () => {
-
     const [windowSize, setWindowSize] = useState({
         width : undefined,
         height : undefined
-        
+
     })
+
     useEffect(()=>{
 
         if(typeof window !== 'undefined') {

@@ -5,7 +5,6 @@ import { userLogOut } from "../../redux/user/userAction";
 import { useForm } from "react-hook-form";
 
 
-
 function HeaderLogOut() {
     const isInfo = useSelector((state)=>state.payload);
     console.log(isInfo);
@@ -21,7 +20,6 @@ function HeaderLogOut() {
             window.location.reload();   
         }
     }
-
 
     return (
         <NavItem>

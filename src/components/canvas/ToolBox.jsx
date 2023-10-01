@@ -2,13 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 function Tool() {
-
     return <ToolBox>Tool</ToolBox>
-    
 } 
 
 export default Tool
-
 
 const ToolBox = styled.span`
     padding: 5px;

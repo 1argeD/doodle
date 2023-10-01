@@ -28,6 +28,7 @@ export const postCanvas = createAsyncThunk(
     }
 
 )
+
 //canvas 목록 가져오기
 export const getCanvasList = createAsyncThunk(
     '/get/canvasData',
@@ -49,6 +50,7 @@ export const getCanvasList = createAsyncThunk(
         }
     }
 )
+
 //canvas 단일 조회
 export const getCanvas = createAsyncThunk(
     'get/canvasListData',

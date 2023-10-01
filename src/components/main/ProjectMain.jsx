@@ -4,8 +4,6 @@ import LoginMain from "./LoginMain";
 
 
 function ProjectButton() {
-
-    
     const [token, setToken] = useState(null);
 
     console.log("토큰 값 확인 : ",token);

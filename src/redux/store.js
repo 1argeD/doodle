@@ -12,5 +12,4 @@ const store = configureStore({
     middlewares : [thunk],
 });
 
-
 export default store;

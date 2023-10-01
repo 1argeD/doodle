@@ -6,7 +6,6 @@ import { apis } from "../../shared/axios";
 const URL = "http://localhost:8081"
 
 
-
 export const userSignUp = createAsyncThunk(
     'user/sign-up',
     async(payload, {rejectWithValue}) => {
@@ -31,7 +30,6 @@ export const userSignUp = createAsyncThunk(
         }
     }
 )
-
 
 export const userLogin = createAsyncThunk(
     'user/login',
@@ -59,7 +57,6 @@ export const userLogin = createAsyncThunk(
         } 
     }
 )
-
 
 export const userLogOut = createAsyncThunk(
     'user/logout', 
