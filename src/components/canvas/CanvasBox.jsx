@@ -26,8 +26,12 @@ function CanvasListBox() {
         setIsMouse(data);
     }
 
+    const onMouseLeaveHandler = (data) => {
+        setIsMouse(null);
+    }
+
     const onClickHandler = (props) => {
-          
+        navigate("canvas/"+props)   
     }
 
     if(data) {
@@ -37,6 +41,7 @@ function CanvasListBox() {
                     <ListBox 
                     id = {data.id}
                     isMouse = {isMouse}
+                    onMouseLeave = {() => onMouseLeaveHandler(data.id)}
                     onMouseOver={() => onMouseHandler(data.id)} 
                     onClick={() => onClickHandler(data.id)}>
                         <Text data={data} key={data.id}>title : {data.canvasTitle}</Text>
