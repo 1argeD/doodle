@@ -71,7 +71,6 @@ const Box = styled.div`
     height : 45vw;
 `
 
-
 const Title = styled.div`
     margin-left : 2rem;
     padding-top: 15rem;

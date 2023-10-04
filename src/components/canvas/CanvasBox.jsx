@@ -4,6 +4,17 @@ import { getCanvasList } from "../../redux/canvas/canvasAction";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+function CanvasRadius() {
+    const [onMouse, setMouse] = useState(false);
+    return(
+         <>
+            <Radius></Radius>
+         </>
+    )
+
+}
+
+
 function CanvasListBox() {
     const dispatch = useDispatch();
     const navigate = useNavigate(); 
@@ -54,7 +65,6 @@ function CanvasListBox() {
         )
     }
 }
- 
         
 
 export default CanvasListBox;
@@ -69,7 +79,7 @@ const ListBox = styled.div`
     height : 10vw;
     background-color : #FFFFFF; 
     border : ${({isMouse}) =>
-    isMouse ? "solid 1px #FFFFFF" : "solid 5px green"
+    isMouse ? "solid 1px #FFFFFF" : "solid 3px green"
 }
 `
 
@@ -80,4 +90,18 @@ const Text = styled.div`
     font-size:50px;
     color : #000000;
     font-family: Ink Free;
+`
+
+const Radius = styled.div`
+    cursor: pointer;
+    display : flex;
+    margin : auto;
+    margin-top : 50px;    
+    border-radius : 20px;
+    width : 60vw;
+    height : 10vw;
+    background-color : #FFFFFF; 
+    border : ${({isMouse}) =>
+    isMouse ? "solid 1px #FFFFFF" : "solid 3px green"
+}
 `
