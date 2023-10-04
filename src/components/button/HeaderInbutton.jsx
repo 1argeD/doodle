@@ -9,7 +9,6 @@ function HeaderLogin() {
         navigate(path);
     };
 
-
     return (
         <NavItem>
             <SignIn onClick={() => onPathHandler("/login")}>Login</SignIn>

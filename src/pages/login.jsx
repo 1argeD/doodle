@@ -9,8 +9,7 @@ const Loginpage = () => {
                 <LoginLayout>
                     <LoginBox/>
                 </LoginLayout>
-            </>
-    
+            </> 
 }
 
 export default Loginpage;

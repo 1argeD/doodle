@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import CanvasListBox from "./CanvasBox";
 
+
 const CanvasBox = () => {
     return (
         <>

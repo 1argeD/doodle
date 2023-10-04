@@ -5,9 +5,6 @@ import thunk from "redux-thunk";
 
 const  url = "http://localhost:8081";
 
-
-
-
 export const postCanvas = createAsyncThunk(
     'post/canvas',
     async(payload, {rejectWithValue}) => {
@@ -31,6 +28,7 @@ export const postCanvas = createAsyncThunk(
     }
 
 )
+
 //canvas 목록 가져오기
 export const getCanvasList = createAsyncThunk(
     '/get/canvasData',
@@ -52,6 +50,7 @@ export const getCanvasList = createAsyncThunk(
         }
     }
 )
+
 //canvas 단일 조회
 export const getCanvas = createAsyncThunk(
     'get/canvasListData',

@@ -4,6 +4,7 @@ import user from "./user/userSlice"
 import canvas from "./canvas/canvasSlice"
 import { configureStore } from "@reduxjs/toolkit";
 
+
 const rootReducer = combineReducers({
     user,
     canvas,

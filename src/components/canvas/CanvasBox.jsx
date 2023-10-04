@@ -4,24 +4,13 @@ import { getCanvasList } from "../../redux/canvas/canvasAction";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function CanvasRadius() {
-    const [onMouse, setMouse] = useState(false);
-    return(
-         <>
-            <Radius></Radius>
-         </>
-    )
-
-}
-
-
 function CanvasListBox() {
     const dispatch = useDispatch();
     const navigate = useNavigate(); 
 
     const body = dispatch(getCanvasList());
     const [data, setData] = useState(null);
-    const [isMouse, setIsMouse] = useState(false);
+    const [isMouse, setIsMouse] = useState(null);
     
     useEffect(()=>{
         const getData = () => {
@@ -33,15 +22,16 @@ function CanvasListBox() {
     },[])
 
    
-    const onMouseHandler = (isMouse, data) => {
-        console.log("데이터 정보확인 : ", data)
-        console.log("온 마우스 확인");
-        setIsMouse(!isMouse);
-        console.log("마우스가 올라갔을때 : ",isMouse);
+    const onMouseHandler = (data) => {
+        setIsMouse(data);
+    }
+
+    const onMouseLeaveHandler = (data) => {
+        setIsMouse(null);
     }
 
     const onClickHandler = (props) => {
-        
+        navigate("canvas/"+props)   
     }
 
     if(data) {
@@ -51,7 +41,8 @@ function CanvasListBox() {
                     <ListBox 
                     id = {data.id}
                     isMouse = {isMouse}
-                    onMouseOver={() => onMouseHandler(isMouse, data.id)} 
+                    onMouseLeave = {() => onMouseLeaveHandler(data.id)}
+                    onMouseOver={() => onMouseHandler(data.id)} 
                     onClick={() => onClickHandler(data.id)}>
                         <Text data={data} key={data.id}>title : {data.canvasTitle}</Text>
                     </ListBox>
@@ -65,7 +56,6 @@ function CanvasListBox() {
         )
     }
 }
-        
 
 export default CanvasListBox;
 
@@ -78,8 +68,9 @@ const ListBox = styled.div`
     width : 60vw;
     height : 10vw;
     background-color : #FFFFFF; 
-    border : ${({isMouse}) =>
-    isMouse ? "solid 1px #FFFFFF" : "solid 3px green"
+
+    border : ${({isMouse, id}) =>
+    isMouse===id ? "solid 1px #FFFFFF" : "solid 5px green"
 }
 `
 

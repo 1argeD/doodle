@@ -11,7 +11,7 @@ const SighnUp = () => {
             <SignUp></SignUp>
             </SighnLayout>
         </>
-    )
+    )  
 }
 
  export default SighnUp;

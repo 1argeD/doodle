@@ -22,6 +22,7 @@ const initialState = {
   signUpSuccess : false,
 };
 
+
 const userSlice = createSlice({
   name : 'user',
   initialState,
@@ -84,6 +85,7 @@ const userSlice = createSlice({
     })
   }
 })
+
 
 export const {} = userSlice.actions;
 

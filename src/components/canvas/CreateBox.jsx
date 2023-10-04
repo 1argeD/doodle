@@ -6,7 +6,6 @@ import {postCanvas} from "../../redux/canvas/canvasAction"
 
 
 function CreateBox() {
-    
     const dispatch = useDispatch();
 
     const {

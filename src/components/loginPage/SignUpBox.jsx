@@ -16,6 +16,7 @@ const SignUp = () => {
         formState : {isDirty,errors},
     } = useForm({mode : "onChange"})
     
+
     const onSubmit = () => {
         
         if(watch().password!=watch().passwordConfirm) {
