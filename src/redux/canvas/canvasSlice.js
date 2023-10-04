@@ -27,17 +27,17 @@ export const canvasSlice = createSlice({
     extraReducers : (builder) => {
         builder
         //캔버스 생성
-            .addCase(postCanvas.pending, (state)=> {
-                state.isloading = true;
-            })
-            .addCase(postCanvas.fulfilled, (state, action)=> {
-                state.isloading = false,
-                state.canvas = [...state.canvas, action.payload];
-            })
-            .addCase(postCanvas.rejected, (state, action)=> {
-                state.isloading = false;
-                state.error = action.payload;
-            }) 
+        .addCase(postCanvas.pending, (state)=> {
+            state.isloading = true;
+        })
+        .addCase(postCanvas.fulfilled, (state, action)=> {
+            state.isloading = false,
+            state.canvas = [...state.canvas, action.payload];
+        })
+        .addCase(postCanvas.rejected, (state, action)=> {
+            state.isloading = false,
+            state.error = action.payload;
+        }) 
        
         //캔버스 목록 가져오기
         .addCase(getCanvasList.pending, (state)=> {

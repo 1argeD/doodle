@@ -82,17 +82,3 @@ const Text = styled.div`
     color : #000000;
     font-family: Ink Free;
 `
-
-const Radius = styled.div`
-    cursor: pointer;
-    display : flex;
-    margin : auto;
-    margin-top : 50px;    
-    border-radius : 20px;
-    width : 60vw;
-    height : 10vw;
-    background-color : #FFFFFF; 
-    border : ${({isMouse}) =>
-    isMouse ? "solid 1px #FFFFFF" : "solid 3px green"
-}
-`
