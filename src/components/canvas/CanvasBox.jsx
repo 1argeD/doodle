@@ -70,7 +70,7 @@ const ListBox = styled.div`
     background-color : #FFFFFF; 
 
     border : ${({isMouse, id}) =>
-    isMouse===id ? "solid 1px #FFFFFF" : "solid 5px green"
+    isMouse===id ? "solid 5px green" : "solid 1px #FFFFFF"
 }
 `
 
