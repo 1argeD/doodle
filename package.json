@@ -26,7 +26,9 @@
     "socket.io-client": "^4.6.1",
     "sockjs-client": "^1.6.1",
     "styled-components": "^5.2.1",
-    "web-vitals": "^2.1.0"
+    "web-vitals": "^2.1.0",
+    "webstomp": "^0.0.10",
+    "webstomp-client": "^1.2.6"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,5 +53,4 @@
       "last 1 safari version"
     ]
   }
-  
 }

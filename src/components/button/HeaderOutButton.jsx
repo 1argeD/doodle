@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 
 function HeaderLogOut() {
-    const isInfo = useSelector((state)=>state.payload);
+    const isInfo = useSelector((state)=>state.user.refreshToken);
     console.log(isInfo);
 
     const {

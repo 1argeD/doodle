@@ -1,24 +1,81 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import SockJS from "sockjs-client";
 import styled from "styled-components";
+import webstomp from 'webstomp-client';
+
 
 
 function Painting() {
+    const location = useLocation();
+    const canvasId = location.state.canvasId;
+    console.log("캔버스 아이디 값",canvasId);
+    
     //로그인
-    // const token = localStorage.getItem('access-token');
+    const token = localStorage.getItem('refresh-token');
+    console.log("캔버스 아이디 값 받아와짐?",canvasId);
 
-    // var sockjs = new SockJS('http://127.0.0.1:8081/ws');
-    // let supcription;
-    // const ws = webstomp.over(sockjs);
-
-    //웹소켓 관련
-    const stompClient = useRef(null);
 
     //캔버스 관련 
     const canvasRef = useRef(null);
     const canvasSizeRef = useRef(null);
     const [getCtx, setGetCtx] = useState(null);
     const [Painting, setPainting] = useState(false);
+    const spotArr = new Array();
+
+    const sockjs = new SockJS('http://localhost:8081/ws');
+    const ws = webstomp.over(sockjs);
+    console.log("ws 연결정보 확인하기",ws);
+
+    useEffect(()=>{
+        waitForConnection(ws, WSconnect());
+
+    },[]);
+
+    //웹소켓 연결
+    function WSconnect() {
+        try{
+            ws.connect(
+                {
+                    token: token,
+                },
+                ()=>{
+                    ws.subscribe(
+                        `sub/test/${canvasId}`,
+                    )
+                }
+            )
+        } catch(error) {
+            console.log("일단 에러임"+error);
+        }
+   }
+
+     // 웹소켓이 연결될 때 까지 실행하는 함수
+  function waitForConnection(ws, callback = () => {}) {
+    setTimeout(
+      function () {
+        // 연결되었을 때 콜백함수 실행
+        if (ws.ws.readyState === 1) {
+          callback();
+          // 연결이 안 되었으면 재호출
+        } else {
+          waitForConnection(ws, callback);
+        }
+      },
+      1 // 밀리초 간격으로 실행
+    );
+  }
+   
+    //데이터 보내보기
+  function send() {
+    try{
+        ws.send(`pub/test/${canvasId}`,
+        JSON.stringify({
+            canvasId : canvasId,
+            test: spotArr,
+        }))
+    } catch(error) {console.log(error)}
+  }
 
 
     //캔버스 함수
@@ -27,27 +84,34 @@ function Painting() {
         const canvas = canvasRef.current;
         canvas.width = canvas_style.width.replace("px","");
         canvas.height = canvas_style.height.replace("px","");
-        const ctx = canvas.getContext("2d");
+    }, [])
+
+    //팬 함수
+    useEffect(()=> {
+        const canvas2 = canvasRef.current;
+        const ctx = canvas2.getContext("2d");
         ctx.lineJoin = "round";
         ctx.lineWidth = 2.5;
         ctx.strokeStyle = "#000000";
         setGetCtx(ctx)
-    }, [])
+    },[])
 
     const drawFn = e => {
         const mouseX = e.nativeEvent.offsetX;
         const mouseY = e.nativeEvent.offsetY;
+    
         if(!Painting) {
             getCtx.beginPath();
             getCtx.moveTo(mouseX,mouseY);
         } else {
             getCtx.lineTo(mouseX, mouseY);
             getCtx.stroke();
+            spotArr.push("x"+mouseX);
+            spotArr.push("y"+mouseY);
+            send();
         }
     }
-    
-
-    //웹소켓 함수
+   
        
     return <>
     <CanvasStyle ref={canvasSizeRef} >

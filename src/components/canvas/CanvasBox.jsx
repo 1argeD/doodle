@@ -31,7 +31,8 @@ function CanvasListBox() {
     }
 
     const onClickHandler = (props) => {
-        navigate("canvas/"+props)   
+        const canvasId = props;
+        navigate("canvas/"+canvasId, { state: {canvasId:`${canvasId}`}});   
     }
 
     if(data) {
@@ -39,6 +40,7 @@ function CanvasListBox() {
             <>
                 {data.map(data=>(
                     <ListBox 
+                    canvas = {data.id}
                     id = {data.id}
                     isMouse = {isMouse}
                     onMouseLeave = {() => onMouseLeaveHandler(data.id)}
