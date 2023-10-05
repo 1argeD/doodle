@@ -31,11 +31,11 @@ export const canvasSlice = createSlice({
             state.isloading = true;
         })
         .addCase(postCanvas.fulfilled, (state, action)=> {
-            state.isloading = false,
+            state.isloading = false;
             state.canvas = [...state.canvas, action.payload];
         })
         .addCase(postCanvas.rejected, (state, action)=> {
-            state.isloading = false,
+            state.isloading = false;
             state.error = action.payload;
         }) 
        
@@ -44,11 +44,11 @@ export const canvasSlice = createSlice({
             state.isloading = true;
         })
         .addCase(getCanvasList.fulfilled, (state, action)=> {
-            state.isloading = false,
+            state.isloading = false;
             state.list = state.list.concat(action.data);
         })
         .addCase(getCanvasList.rejected, (state, action)=> {
-            state.isloading = true,
+            state.isloading = true;
             state.error = action.payload;
         })
         //캔버스 단일 조회

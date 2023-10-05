@@ -22,12 +22,14 @@ export const postPen = createAsyncThunk(
     '/getPen',
     async (payload, thunkApi) => {
         try{
-            const response = await axios.post(`http://localhost:8081`,
+            console.log("페이로드 정보 확인",payload);
+            const response = await axios.post(`http://localhost:8081/testSub/${payload.canvsId}`,
             {
                 headers: {
                     Authorization: localStorage.getItem('access-token')
                 },
             }) 
+            console.log("실행되면 이게 보임")
             return thunkApi.fulfillWithValue(response.data);
         } catch(error) {
             return thunkApi.rejectWithValue(error.response.data);
@@ -69,11 +71,12 @@ export const postPen = createAsyncThunk(
         }}  
   )
 
-  export const test =  createAsyncThunk(
+  export const websoketTest =  createAsyncThunk(
     '/test',
     async(payload,thunkApi) => {
         try {
-            const response = await axios.get(`http:localhost:8081/test1/${payload.canvsId}`,
+            const response = await axios.get(
+                "http:localhost:8081/testSub/"+`${payload.canvsId}`,
             {
                 headers:{
                     Authorization: localStorage.getItem('access-token')

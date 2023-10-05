@@ -1,20 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import SockJS from "sockjs-client";
+import StompJs from "stompjs"
 import styled from "styled-components";
 import webstomp from 'webstomp-client';
+import { websoketTest } from "../../redux/pen/penAction";
+import { useDispatch } from "react-redux";
 
 
 
 function Painting() {
     const location = useLocation();
+    const dispatch = useDispatch();
     const canvasId = location.state.canvasId;
-    console.log("캔버스 아이디 값",canvasId);
-    
+    console.log("캔버스 아이디",canvasId);
     //로그인
     const token = localStorage.getItem('refresh-token');
-    console.log("캔버스 아이디 값 받아와짐?",canvasId);
 
+    const sockjs = new SockJS('http://localhost:8081/ws');
+
+    const options = { debug: true, heartbeat: false, protocols: ['v11.stomp'] }
+    const ws = webstomp.over(sockjs, options);
+    console.log("ws 연결정보 확인하기",ws);
 
     //캔버스 관련 
     const canvasRef = useRef(null);
@@ -23,57 +30,27 @@ function Painting() {
     const [Painting, setPainting] = useState(false);
     const spotArr = new Array();
 
-    const sockjs = new SockJS('http://localhost:8081/ws');
-    const ws = webstomp.over(sockjs);
-    console.log("ws 연결정보 확인하기",ws);
+    spotArr.push(canvasId);
+   
+    function wsconnect() {
+        ws.connect({},()=>{
+            ws.subscribe(`/sub/testSub/${canvasId}`);
+           })
+    }
 
     useEffect(()=>{
-        waitForConnection(ws, WSconnect());
-
+         //웹소켓 연결
+        wsconnect();
     },[]);
 
-    //웹소켓 연결
-    function WSconnect() {
-        try{
-            ws.connect(
-                {
-                    token: token,
-                },
-                ()=>{
-                    ws.subscribe(
-                        `sub/test/${canvasId}`,
-                    )
-                }
-            )
-        } catch(error) {
-            console.log("일단 에러임"+error);
-        }
-   }
-
-     // 웹소켓이 연결될 때 까지 실행하는 함수
-  function waitForConnection(ws, callback = () => {}) {
-    setTimeout(
-      function () {
-        // 연결되었을 때 콜백함수 실행
-        if (ws.ws.readyState === 1) {
-          callback();
-          // 연결이 안 되었으면 재호출
-        } else {
-          waitForConnection(ws, callback);
-        }
-      },
-      1 // 밀리초 간격으로 실행
-    );
-  }
    
     //데이터 보내보기
-  function send() {
-    try{
-        ws.send(`pub/test/${canvasId}`,
-        JSON.stringify({
-            canvasId : canvasId,
-            test: spotArr,
-        }))
+  function WSsend() {
+    try{ 
+        ws.send(`pub/testSub/${canvasId}`,
+        JSON.stringify({canvasId : canvasId}),
+        )
+        
     } catch(error) {console.log(error)}
   }
 
@@ -108,7 +85,7 @@ function Painting() {
             getCtx.stroke();
             spotArr.push("x"+mouseX);
             spotArr.push("y"+mouseY);
-            send();
+            WSsend();
         }
     }
    

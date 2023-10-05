@@ -1,9 +1,9 @@
-import { CreateSlice, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
 postPen,
 getPen,
 updatePen,
-deletePen
+deletePen,
 } from "../pen/penAction";
 
 const initialState = {
@@ -28,11 +28,11 @@ export const penSlice = createSlice({
             state.isloading = true;
         })
         .addCase(postPen.fulfilled, (state, action)=> {
-            state.isloading = false,
+            state.isloading = false;
             state.canvas = [...state.canvas, action.payload];
         })
         .addCase(postPen.rejected, (state, action)=> {
-            state.isloading = false,
+            state.isloading = false;
             state.error = action.payload;
         }) 
 
@@ -41,11 +41,11 @@ export const penSlice = createSlice({
             state.isloading = true;
         })
         .addCase(getPen.fulfilled, (state, action)=> {
-            state.isloading = false,
+            state.isloading = false;
             state.canvas = [...state.canvas, action.payload];
         })
         .addCase(getPen.rejected, (state, action)=> {
-            state.isloading = false,
+            state.isloading = false;
             state.error = action.payload;
         }) 
 
@@ -54,11 +54,11 @@ export const penSlice = createSlice({
             state.isloading = true;
         })
         .addCase(updatePen.fulfilled, (state, action)=> {
-            state.isloading = false,
+            state.isloading = false;
             state.canvas = [...state.canvas, action.payload];
         })
         .addCase(updatePen.rejected, (state, action)=> {
-            state.isloading = false,
+            state.isloading = false;
             state.error = action.payload;
         }) 
 
@@ -67,13 +67,16 @@ export const penSlice = createSlice({
             state.isloading = true;
         })
         .addCase(deletePen.fulfilled, (state, action)=> {
-            state.isloading = false,
+            state.isloading = false;
             state.canvas = [...state.canvas, action.payload];
         })
         .addCase(deletePen.rejected, (state, action)=> {
-            state.isloading = false,
+            state.isloading = false;
             state.error = action.payload;
         })     
     }
     
 })
+
+export const {pen} = penSlice.actions;
+export default penSlice.reducer;
