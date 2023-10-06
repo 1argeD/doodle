@@ -29,28 +29,56 @@ function Painting() {
     const [getCtx, setGetCtx] = useState(null);
     const [Painting, setPainting] = useState(false);
     const spotArr = new Array();
-
+    var transSpot;
     spotArr.push(canvasId);
    
+   
     function wsconnect() {
-        ws.connect({},()=>{
-            ws.subscribe(`/sub/testSub/${canvasId}`);
-           })
+        try{
+            transSpot = spotArr.join();
+            ws.connect({},()=>{
+                ws.subscribe(`/sub/testSub/${canvasId}`,function(greeting){
+                    console.log("받아오는 데이터 내용확인ㅣㅣㅣㅣ"+greeting+"ㅣㅣㅣㅣ");
+                },{});
+                ws.send(`/pub/testSub/${canvasId}`,JSON.stringify(
+                    {test : spotArr}
+                )) 
+               })
+        } catch(e) {
+            console.log(e.data);
+        }
     }
 
     useEffect(()=>{
          //웹소켓 연결
-        wsconnect();
     },[]);
 
    
+    function waitConncet(ws, callback = () => {}) {
+        setTimeout(
+          function () {
+            // 연결되었을 때 콜백함수 실행
+            if (ws.ws.readyState === 1) {
+              callback();
+              // 연결이 안 되었으면 재호출
+            } else {
+                waitConncet(ws, callback);
+            }
+          },
+          1 // 밀리초 간격으로 실행
+        );
+      }
+
     //데이터 보내보기
   function WSsend() {
     try{ 
-        ws.send(`pub/testSub/${canvasId}`,
-        JSON.stringify({canvasId : canvasId}),
-        )
-        
+        waitConncet(ws, function() {
+            ws.send(`pub/testSub/${canvasId}`,
+            JSON.stringify({
+                test : canvasId+", 제발 갔으면 좋겠다.", 
+            }),
+            ) 
+        }) 
     } catch(error) {console.log(error)}
   }
 
@@ -85,7 +113,7 @@ function Painting() {
             getCtx.stroke();
             spotArr.push("x"+mouseX);
             spotArr.push("y"+mouseY);
-            WSsend();
+            wsconnect();
         }
     }
    
