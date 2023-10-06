@@ -9,6 +9,7 @@ deletePen,
 const initialState = {
     isloading : false,
     error : null,
+    list:[],
     userToken : localStorage.getItem("access-toekn")
         ? localStorage.getItem("access-token")
         : null,
@@ -29,7 +30,7 @@ export const penSlice = createSlice({
         })
         .addCase(postPen.fulfilled, (state, action)=> {
             state.isloading = false;
-            state.canvas = [...state.canvas, action.payload];
+            state.pen = [...state.pen, action.payload];
         })
         .addCase(postPen.rejected, (state, action)=> {
             state.isloading = false;
@@ -42,7 +43,7 @@ export const penSlice = createSlice({
         })
         .addCase(getPen.fulfilled, (state, action)=> {
             state.isloading = false;
-            state.canvas = [...state.canvas, action.payload];
+            state.list = state.list.concat(action.data);
         })
         .addCase(getPen.rejected, (state, action)=> {
             state.isloading = false;
@@ -55,7 +56,7 @@ export const penSlice = createSlice({
         })
         .addCase(updatePen.fulfilled, (state, action)=> {
             state.isloading = false;
-            state.canvas = [...state.canvas, action.payload];
+            state.pen = [...state.pen, action.payload];
         })
         .addCase(updatePen.rejected, (state, action)=> {
             state.isloading = false;
@@ -68,7 +69,7 @@ export const penSlice = createSlice({
         })
         .addCase(deletePen.fulfilled, (state, action)=> {
             state.isloading = false;
-            state.canvas = [...state.canvas, action.payload];
+            state.pen = [...state.pen, action.payload];
         })
         .addCase(deletePen.rejected, (state, action)=> {
             state.isloading = false;

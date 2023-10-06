@@ -35,7 +35,7 @@ export const getCanvasList = createAsyncThunk(
     async(thunkApi,{fulfillWithValue}) => {
         try{
             const response = await axios.get(
-                url+"/canvas/get",
+                url+"/canvas/all",
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export const getCanvas = createAsyncThunk(
     async(payload,thunkApi) => {
         try{
             const {data} = await axios.get(
-                url+`canvas/get/${payload.canvasId}`,
+                url+`canvas/one/${payload.canvasId}`,
             );
             if(!data) {
                 return;

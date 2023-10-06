@@ -22,15 +22,18 @@ export const postPen = createAsyncThunk(
     '/getPen',
     async (payload, thunkApi) => {
         try{
-            console.log("페이로드 정보 확인",payload);
-            const response = await axios.post(`http://localhost:8081/testSub/${payload.canvsId}`,
+            console.log("getPen 함수가 실행중임");
+            console.log("페이로드 값 확인해보기", payload)
+            const response = await axios.get(`http://localhost:8081/canvas/pen/${payload}`,
             {
                 headers: {
-                    Authorization: localStorage.getItem('access-token')
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem('access-token'),
+                    RefreshToken : localStorage.getItem("refresh-token"),
                 },
             }) 
-            console.log("실행되면 이게 보임")
-            return thunkApi.fulfillWithValue(response.data);
+            console.log("일단 여기까지 왔음 리스폰스 값 확인해보기 : ",response.data);
+            return response.data;
         } catch(error) {
             return thunkApi.rejectWithValue(error.response.data);
         }
@@ -71,20 +74,3 @@ export const postPen = createAsyncThunk(
         }}  
   )
 
-  export const websoketTest =  createAsyncThunk(
-    '/test',
-    async(payload,thunkApi) => {
-        try {
-            const response = await axios.get(
-                "http:localhost:8081/testSub/"+`${payload.canvsId}`,
-            {
-                headers:{
-                    Authorization: localStorage.getItem('access-token')
-                }
-            })
-            return thunkApi.fulfillWithValue(response)
-        } catch(error) {
-            console.log(error.response.data);
-        }
-    }
-  )

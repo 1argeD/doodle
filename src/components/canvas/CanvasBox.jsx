@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { getCanvasList } from "../../redux/canvas/canvasAction";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getPen } from "../../redux/pen/penAction";
 
 function CanvasListBox() {
     const dispatch = useDispatch();
