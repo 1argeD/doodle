@@ -12,6 +12,10 @@ function Painting() {
     const location = useLocation();
     const dispatch = useDispatch();
     const canvasId = location.state.canvasId;
+    const penData = location.state.penData;
+
+    
+    console.log("넘어온 팬 데이터 값 확인하기 : ????", penData);
 
 
     //로그인
@@ -35,7 +39,6 @@ function Painting() {
     const [data, setData] = useState(null);
     const spotArr = new Array();
    
-   
     function wsconnect() {
         try{
             ws.connect({},()=>{
@@ -50,16 +53,10 @@ function Painting() {
 
     //웹소켓 연결
     useEffect(()=> {
-        const data = dispatch(getPen(canvasId))
-        const getData = () =>{
-            data.then((data)=>{
-                setData(data.payload);
-            })
-        }
-        console.log("데이터값 읽어보기 : " , data);
-        getData();
         wsconnect();
     })
+
+
 
    function wssend() {
     try{

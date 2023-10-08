@@ -79,5 +79,5 @@ export const penSlice = createSlice({
     
 })
 
-export const {pen} = penSlice.actions;
+export const {} = penSlice.actions;
 export default penSlice.reducer;

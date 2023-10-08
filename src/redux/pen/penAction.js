@@ -33,7 +33,7 @@ export const postPen = createAsyncThunk(
                 },
             }) 
             console.log("일단 여기까지 왔음 리스폰스 값 확인해보기 : ",response.data);
-            return response.data;
+            return thunkApi.fulfillWithValue(response.data);
         } catch(error) {
             return thunkApi.rejectWithValue(error.response.data);
         }
