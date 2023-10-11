@@ -5,7 +5,7 @@ import styled from "styled-components";
 import webstomp from 'webstomp-client';
 import { useDispatch, useSelector } from "react-redux";
 import { getPen } from "../../redux/pen/penAction";
-import { get } from "react-hook-form";
+import { get,useForm } from "react-hook-form";
 
 
 
@@ -14,18 +14,24 @@ function Painting() {
     const token = localStorage.getItem('access-token');
     const member = JSON.parse(localStorage.getItem('user-info'));
     const memberId = member?.id;
-
+    
     const location = useLocation();
     const dispatch = useDispatch();
     const canvasId = location.state.canvasId;
     const penDataO = location.state.penData;
     const penData = JSON.parse(penDataO);
+
+    const {
+        handleSubmit,
+    } = useForm({mode : "onChange"})
+
     
     if(penData[0]==undefined){
         console.log("변화된 데이터 값 확인하기 : ",penData[0]);
     } else{
         console.log("변화된 데이터 값 확인하기 : ",penData[0].spot);
     }
+
     const sockjs = new SockJS('http://localhost:8081/ws');
 
     const options = { debug: true, heartbeat: false, protocols: ['v11.stomp'] }
@@ -45,7 +51,6 @@ function Painting() {
 
     //웹소켓 연결
     useEffect(()=> {
-        
         wsconnect();
     })
 
@@ -54,11 +59,10 @@ function Painting() {
     const canvasSizeRef = useRef(null);
     const [getCtx, setGetCtx] = useState(null);
     const [Painting, setPainting] = useState(false);
-    const [point, setPont] = useState([]);
-    const spotArr = new Array();
-    const [widthl, setWidthl] = useState(null);
-    const [heightl, setHeightl] = useState(null);
-
+    const [spotArr, setSpotArr] = useState([]);
+    const [widthArr, setWidthArr] = useState([]);
+    const [heightArr, setHeightArr] = useState([]);
+   
    function wssend() {
     try{
         ws.send(`/pub/canvas/${canvasId}`,JSON.stringify(
@@ -82,69 +86,112 @@ function Painting() {
         const canvas = canvasRef.current;
         canvas.width = canvas_style.width.replace("px","");
         canvas.height = canvas_style.height.replace("px","");
-    }, [])
+    },[])
 
     //팬 설정 함수
     useEffect(()=> {
         const canvas2 = canvasRef.current;
         const ctx = canvas2.getContext("2d");
+
         ctx.lineJoin = "round";
         ctx.lineWidth = 2.5;
         ctx.strokeStyle = "#000000";
+
         setGetCtx(ctx);
-        draw();
     },[])
 
-
+    //캔버스에 그림그리기
     const drawFn = e => {
         const mouseX = e.nativeEvent.offsetX;
         const mouseY = e.nativeEvent.offsetY;
     
         if(!Painting) {
             getCtx.beginPath();
-            getCtx.moveTo(mouseX,mouseY);
+            getCtx.moveTo(mouseX, mouseY);
         } else {
             getCtx.lineTo(mouseX, mouseY);
             getCtx.stroke();
             spotArr.push("x"+mouseX);
             spotArr.push("y"+mouseY);
+            setSpotArr(spotArr);
+        }
+    }
+
+    useEffect(() => {
+        drawPen(); 
+    },[]) 
+
+    //화면에 그림 뿌려주기
+    const drawPen = e => {
+     
+        if(getCtx!=null) {
+            var mouseX;
+            var mouseY;
+            const s = new Array(); 
+            for(var i=0; i<penData.length; i++) {
+                for(var j=0; j<penData[i].spot.length; j++) {
+                    mouseY = penData[i].spot[j].indexOf('x') ? penData[i].spot[j].replace('y',"") : null;
+                    mouseX = penData[i].spot[j].indexOf('y') ? penData[i].spot[j].replace('x',"") : null;     
+                    if(mouseX!=null) {
+                        s.push(mouseX);
+                    } else if(mouseY!=null) {
+                        s.push(mouseY);
+                    }
+                    for(var k=0; k<s.length-3; k++) {
+                        getCtx.beginPath();
+                        getCtx.moveTo(s[k], s[k+1]);
+                        getCtx.lineTo(s[k+2], s[k+3]);
+                        getCtx.stroke();
+                        getCtx.closePath();
+                    } 
+                }
+                s.length=0;
+            }
+        } else {
+
+        }
+    }
+
+    const customHandler=()=> {
+        setPainting(false);
+        if(spotArr.length!=0) {
             wssend();
         }
+        spotArr.length=0;
     }
 
-    const draw = () => {
-        var maxX;
-        var minX;
 
-        var maxY;
-        var minY;
+    //div의 너비 높이를 정의해줄 함수
+    // const draw = () => {
+    //     var maxX;
+    //     var minX;
 
-        var mouseX=0;
-        var mouseY=0; 
+    //     var maxY;
+    //     var minY;
 
-        for(var i=0; i<penData.length; i++){
-            for(var j=0; j<penData[i].spot.length; j++) {
-                if(penData[i].spot[j].indexOf('y')) {
-                    mouseX  = penData[i].spot[j].replace('x',"")
-                    const x = penData[i].spot[0].replace('x',"")
-                    console.log("x의 min 값 케트 : ",x)
-                    minX = Math.min(x, mouseX);
-                    console.log("x의 minX 값 케트 : ",minX)
-                    maxX = Math.max(x, mouseX);
-                    console.log("x의 maxX 값 케트 : ",maxX)
-                } else {
-                    mouseY = penData[i].spot[j].replace('y',"")
-                    const y = penData[i].spot[0].replace('y',"")
-                    minY = Math.min(y, mouseY);
-                    maxY = Math.max(y, mouseY);
-                }
-                console.log("x축 거리계산 : ",Math.abs(maxX-minX))
-                setWidthl(Math.abs(maxX-minX));
-                setHeightl(Math.abs(maxY-minY));
-            }
-        }
-    }
-     
+    //     var mouseX=0;
+    //     var mouseY=0; 
+
+    //     for(var i=0; i<penData.length; i++){
+    //         for(var j=0; j<penData[i].spot.length; j++) {
+    //             if(penData[i].spot[j].indexOf('y')) {
+    //                 mouseX  = penData[i].spot[j].replace('x',"")
+    //                 const x = penData[i].spot[0].replace('x',"")
+    //                 minX = Math.min(x, mouseX);
+    //                 maxX = Math.max(x, mouseX); 
+    //             } else if(penData[i].spot[j].indexOf('x')){
+    //                 mouseY = penData[i].spot[j].replace('y',"")
+    //                 const y = penData[i].spot[1].replace('y',"")
+    //                 minY = Math.min(y, mouseY);
+    //                 maxY = Math.max(y, mouseY);
+    //             }
+    //             const width = Math.abs(maxX-minX);
+    //             const height = Math.abs(maxY-minY);
+                
+    //         }
+    //         }
+    //     }
+    
     return (
         <>
     <CanvasStyle ref={canvasSizeRef} >
@@ -152,8 +199,8 @@ function Painting() {
         <div
             id={value.id}
             style={{
-                width : widthl+"px",
-                height: heightl+"px",
+                width : "20px",
+                height: "20px",
                 color : "black",
                 border : "1px #000000 solid",
                 position : "absolute",
@@ -167,7 +214,7 @@ function Painting() {
             onMouseDown={() => setPainting(true)}
             onMouseUp={() => setPainting(false)}
             onMouseMove={e => drawFn(e)}
-            onMouseLeave={() => setPainting(false)}
+            onMouseLeave={() => handleSubmit(customHandler())}
         ></canvas>
     </CanvasStyle>
     </>
