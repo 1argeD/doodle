@@ -4,6 +4,8 @@ import { getCanvasList } from "../../redux/canvas/canvasAction";
 import { useDispatch } from "react-redux";
 import { json, useNavigate } from "react-router-dom";
 import { getPen } from "../../redux/pen/penAction";
+import LoginMain from "../main/LoginMain";
+import SelectButton from "../button/Clickbutton";
 
 function CanvasListBox() {
     const dispatch = useDispatch();
@@ -12,8 +14,7 @@ function CanvasListBox() {
     const body = dispatch(getCanvasList());
     const [data, setData] = useState(null);
     const [isMouse, setIsMouse] = useState(null);
-    
-
+    const [canvas, setCanvas] = useState(null);
     
     useEffect(()=>{
         const getData = () => {
@@ -30,18 +31,17 @@ function CanvasListBox() {
     }
 
     const onMouseLeaveHandler = (data) => {
-        setIsMouse(null);
     }
 
     const onClickHandler = (props) => {
         const canvasId = props;
+        setCanvas(canvasId);
         const pen = dispatch(getPen(`${canvasId}`));
         const penList = Promise.resolve(pen);
         penList.then((value)=> {
             const penData = JSON.stringify(value.payload);
             navigate("canvas/"+canvasId, { state: {canvasId:`${canvasId}`, penData: `${penData}`}});  
         })
-         
     }
 
     if(data) {

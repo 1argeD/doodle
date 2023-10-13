@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SockJS from "sockjs-client";
 import styled from "styled-components";
 import webstomp from 'webstomp-client';
@@ -17,20 +17,20 @@ function Painting() {
     
     const location = useLocation();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    
     const canvasId = location.state.canvasId;
     const penDataO = location.state.penData;
     const penData = JSON.parse(penDataO);
 
+
+    if(!token) {
+        navigate("/");
+    }
+
     const {
         handleSubmit,
     } = useForm({mode : "onChange"})
-
-    
-    if(penData[0]==undefined){
-        console.log("변화된 데이터 값 확인하기 : ",penData[0]);
-    } else{
-        console.log("변화된 데이터 값 확인하기 : ",penData[0].spot);
-    }
 
     const sockjs = new SockJS('http://localhost:8081/ws');
 
@@ -62,7 +62,12 @@ function Painting() {
     const [spotArr, setSpotArr] = useState([]);
     const [widthArr, setWidthArr] = useState([]);
     const [heightArr, setHeightArr] = useState([]);
-   
+
+    const x = new Array();
+    const y = new Array(); 
+
+    var ctx;
+
    function wssend() {
     try{
         ws.send(`/pub/canvas/${canvasId}`,JSON.stringify(
@@ -91,7 +96,7 @@ function Painting() {
     //팬 설정 함수
     useEffect(()=> {
         const canvas2 = canvasRef.current;
-        const ctx = canvas2.getContext("2d");
+        ctx = canvas2.getContext("2d");
 
         ctx.lineJoin = "round";
         ctx.lineWidth = 2.5;
@@ -99,6 +104,14 @@ function Painting() {
 
         setGetCtx(ctx);
     },[])
+
+
+    //저장된 그림 가져오기
+    useEffect(() => {
+        drawPen();
+    },[getCtx]) 
+
+
 
     //캔버스에 그림그리기
     const drawFn = e => {
@@ -117,35 +130,30 @@ function Painting() {
         }
     }
 
-    useEffect(() => {
-        drawPen(); 
-    },[]) 
-
     //화면에 그림 뿌려주기
     const drawPen = e => {
      
         if(getCtx!=null) {
             var mouseX;
             var mouseY;
-            const s = new Array(); 
             for(var i=0; i<penData.length; i++) {
                 for(var j=0; j<penData[i].spot.length; j++) {
                     mouseY = penData[i].spot[j].indexOf('x') ? penData[i].spot[j].replace('y',"") : null;
                     mouseX = penData[i].spot[j].indexOf('y') ? penData[i].spot[j].replace('x',"") : null;     
                     if(mouseX!=null) {
-                        s.push(mouseX);
+                        x.push(mouseX);
                     } else if(mouseY!=null) {
-                        s.push(mouseY);
+                        y.push(mouseY);
                     }
-                    for(var k=0; k<s.length-3; k++) {
+                    for(var k=0; k<x.length-1; k++) {
                         getCtx.beginPath();
-                        getCtx.moveTo(s[k], s[k+1]);
-                        getCtx.lineTo(s[k+2], s[k+3]);
+                        getCtx.moveTo(x[k], y[k]);
+                        getCtx.lineTo(x[k+1], y[k+1]);
                         getCtx.stroke();
-                        getCtx.closePath();
                     } 
                 }
-                s.length=0;
+                x.length=0;
+                y.length=0;
             }
         } else {
 
@@ -156,65 +164,21 @@ function Painting() {
         setPainting(false);
         if(spotArr.length!=0) {
             wssend();
+            spotArr.length=0;
         }
-        spotArr.length=0;
     }
 
-
-    //div의 너비 높이를 정의해줄 함수
-    // const draw = () => {
-    //     var maxX;
-    //     var minX;
-
-    //     var maxY;
-    //     var minY;
-
-    //     var mouseX=0;
-    //     var mouseY=0; 
-
-    //     for(var i=0; i<penData.length; i++){
-    //         for(var j=0; j<penData[i].spot.length; j++) {
-    //             if(penData[i].spot[j].indexOf('y')) {
-    //                 mouseX  = penData[i].spot[j].replace('x',"")
-    //                 const x = penData[i].spot[0].replace('x',"")
-    //                 minX = Math.min(x, mouseX);
-    //                 maxX = Math.max(x, mouseX); 
-    //             } else if(penData[i].spot[j].indexOf('x')){
-    //                 mouseY = penData[i].spot[j].replace('y',"")
-    //                 const y = penData[i].spot[1].replace('y',"")
-    //                 minY = Math.min(y, mouseY);
-    //                 maxY = Math.max(y, mouseY);
-    //             }
-    //             const width = Math.abs(maxX-minX);
-    //             const height = Math.abs(maxY-minY);
-                
-    //         }
-    //         }
-    //     }
     
     return (
         <>
     <CanvasStyle ref={canvasSizeRef} >
-    {penData?.map((value)=>(
-        <div
-            id={value.id}
-            style={{
-                width : "20px",
-                height: "20px",
-                color : "black",
-                border : "1px #000000 solid",
-                position : "absolute",
-                zIndex: 9999,
-            }}
-        ></div>
-    ))}
         <canvas
             ref={canvasRef} 
             className="canvas"
             onMouseDown={() => setPainting(true)}
-            onMouseUp={() => setPainting(false)}
+            onMouseUp={() => handleSubmit(customHandler())}
             onMouseMove={e => drawFn(e)}
-            onMouseLeave={() => handleSubmit(customHandler())}
+            onMouseLeave={() => setPainting(false)}
         ></canvas>
     </CanvasStyle>
     </>

@@ -4,15 +4,17 @@ import styled from "styled-components";
 
 
 function SelectButton(props) {
+    console.log("props값 확인하기 : ",props.value)
+    console.log(props.canvasId)
     
     const navigate = useNavigate();
 
     const onPathHandler = (props) => {
         if(props.value==="New") {
             navigate("/create");
-        } else if(props.value ==="enter") {
-
-        } else if(props.value === "delete") {
+        } else if(props.value ==="Enter") {
+            console.log("props값 확인하기 : ",props)
+        } else if(props.value === "Delete") {
 
         }
     }

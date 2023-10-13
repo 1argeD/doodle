@@ -4,15 +4,21 @@ import { useNavigate } from 'react-router-dom';
 import HeaderLogin from '../button/HeaderInbutton';
 import HeaderLogOut from "../button/HeaderOutButton";
 import styled from "styled-components";
+import Tool from "./ToolBox";
+import { useState } from "react";
 
 
 function Header2() {
     const token = localStorage.getItem("access-token");
 
     const navigate = useNavigate();
-
+    const [state, setState] = useState(false);
     const { handleSubmit, } 
     = useForm({ mode : "onChange" });
+
+    const onClickHandler = (state) => {
+        setState(!state);
+    }
 
     const onPathHandler = (path) => {
         navigate(path);
@@ -77,7 +83,7 @@ const NavItem = styled.div`
   width: fit-content;
 `;
 
-const Tool = styled.div`
+const ToolFont = styled.div`
     padding-top: 50px;
     margin: 20px;
     font-size: 1.5rem;

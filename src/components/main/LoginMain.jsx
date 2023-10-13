@@ -4,7 +4,8 @@ import CanvasBox from "../canvas/CanvasListBox";
 import SelectButton from "../button/Clickbutton";
 
 
-const LoginMain = () => {
+const LoginMain = (props) => {
+    console.log("받아오는 데이터 값 확인 : ", props)
     return(<>
              <Wrapper>
             <CanvasBox/>

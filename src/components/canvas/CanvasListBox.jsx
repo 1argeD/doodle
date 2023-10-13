@@ -7,7 +7,7 @@ const CanvasBox = () => {
     return (
         <>
         <Box>
-            <CanvasListBox  />
+            <CanvasListBox />
         </Box>
         </>
     )

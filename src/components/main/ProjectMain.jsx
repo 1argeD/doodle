@@ -10,7 +10,7 @@ function ProjectButton() {
 
     useEffect(()=> {
          setToken(localStorage.getItem('access-token'));
-    },[setToken]) 
+    },[token]) 
 
  
     let status;
