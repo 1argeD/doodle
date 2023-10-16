@@ -22,8 +22,6 @@ export const postPen = createAsyncThunk(
     '/getPen',
     async (payload, thunkApi) => {
         try{
-            console.log("getPen 함수가 실행중임");
-            console.log("페이로드 값 확인해보기", payload)
             const response = await axios.get(`http://localhost:8081/canvas/pen/${payload}`,
             {
                 headers: {
@@ -32,7 +30,6 @@ export const postPen = createAsyncThunk(
                     RefreshToken : localStorage.getItem("refresh-token"),
                 },
             }) 
-            console.log("일단 여기까지 왔음 리스폰스 값 확인해보기 : ",response.data);
             return thunkApi.fulfillWithValue(response.data);
         } catch(error) {
             return thunkApi.rejectWithValue(error.response.data);

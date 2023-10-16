@@ -2,19 +2,12 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getCanvasList } from "../../redux/canvas/canvasAction";
 import { useDispatch } from "react-redux";
-import { json, useNavigate } from "react-router-dom";
-import { getPen } from "../../redux/pen/penAction";
-import LoginMain from "../main/LoginMain";
-import SelectButton from "../button/Clickbutton";
 
-function CanvasListBox() {
+function CanvasListBox(props) {
     const dispatch = useDispatch();
-    const navigate = useNavigate(); 
-
     const body = dispatch(getCanvasList());
     const [data, setData] = useState(null);
-    const [isMouse, setIsMouse] = useState(null);
-    const [canvas, setCanvas] = useState(null);
+    const [isClick, setIsClick] = useState(null);
     
     useEffect(()=>{
         const getData = () => {
@@ -25,36 +18,22 @@ function CanvasListBox() {
         getData();
     },[])
 
-   
-    const onMouseHandler = (data) => {
-        setIsMouse(data);
+    const onClickHandler = (data) => {
+        setIsClick(data);
     }
 
-    const onMouseLeaveHandler = (data) => {
-    }
-
-    const onClickHandler = (props) => {
-        const canvasId = props;
-        setCanvas(canvasId);
-        const pen = dispatch(getPen(`${canvasId}`));
-        const penList = Promise.resolve(pen);
-        penList.then((value)=> {
-            const penData = JSON.stringify(value.payload);
-            navigate("canvas/"+canvasId, { state: {canvasId:`${canvasId}`, penData: `${penData}`}});  
-        })
-    }
-
-    if(data) {
+    if(data&&data.length!=0) {
         return(
             <>
                 {data.map(data=>(
                     <ListBox 
                     canvas = {data.id}
                     id = {data.id}
-                    isMouse = {isMouse}
-                    onMouseLeave = {() => onMouseLeaveHandler(data.id)}
-                    onMouseOver={() => onMouseHandler(data.id)} 
-                    onClick={() => onClickHandler(data.id)}>
+                    isClick = {isClick}
+                    onClick={() => {{
+                        onClickHandler(data.id);
+                        props.setCanvas(data.id)}
+                        }}>
                         <Text data={data} key={data.id}>title : {data.canvasTitle}</Text>
                     </ListBox>
                 ))}
@@ -68,9 +47,10 @@ function CanvasListBox() {
     }
 }
 
+
 export default CanvasListBox;
 
-const ListBox = styled.div`
+const ListBox = styled.button`
     cursor: pointer;
     display : flex;
     margin : auto;
@@ -79,9 +59,8 @@ const ListBox = styled.div`
     width : 60vw;
     height : 10vw;
     background-color : #FFFFFF; 
-
-    border : ${({isMouse, id}) =>
-    isMouse===id ? "solid 5px green" : "solid 1px #FFFFFF"
+    border : ${({isClick, id}) => 
+    isClick===id ? "solid 5px green" : "solid 1px #FFFFFF"
 }
 `
 

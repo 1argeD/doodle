@@ -3,11 +3,15 @@ import styled from "styled-components";
 import CanvasListBox from "./CanvasBox";
 
 
-const CanvasBox = () => {
+const CanvasBox = (props) => {
+    const [canvas, setCanvas] = useState(null);
+    
     return (
         <>
         <Box>
-            <CanvasListBox />
+            <CanvasListBox 
+            setCanvas = {setCanvas}
+            onclick={props.setCanvas(canvas)}/>
         </Box>
         </>
     )

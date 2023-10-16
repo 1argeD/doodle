@@ -2,17 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import CanvasBox from "../canvas/CanvasListBox";
 import SelectButton from "../button/Clickbutton";
+import { useState } from "react";
 
 
 const LoginMain = (props) => {
-    console.log("받아오는 데이터 값 확인 : ", props)
+    const [canvas, setCanvas] = useState(null);
+
     return(<>
              <Wrapper>
-            <CanvasBox/>
+            <CanvasBox setCanvas = {setCanvas}/>
                 <Wrapper2>
-                <SelectButton value={"New"} ></SelectButton>
-                <SelectButton value={"Enter"}></SelectButton>
-                <SelectButton value={"Delete"}></SelectButton>
+                <SelectButton value={"New"}></SelectButton>
+                <SelectButton value={"Enter"} canvasId = {canvas}></SelectButton>
+                <SelectButton value={"Delete"} canvasId = {canvas}></SelectButton>
                 </Wrapper2>
             </Wrapper>
         </>

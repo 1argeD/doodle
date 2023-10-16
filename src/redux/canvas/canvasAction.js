@@ -90,3 +90,24 @@ export const putCanvas = createAsyncThunk(
         }
     }
 )
+
+export const deleteCanvas = createAsyncThunk(
+    `/delete/Canvas`,
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await axios.delete(
+                url+`/canvas/delete/${payload}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization : localStorage.getItem("access-token"),
+                        RefreshToken : localStorage.getItem("refresh-token"),
+                    },
+                }
+            )
+            return response.data;
+        } catch(error) {
+            return rejectWithValue(error.data);
+        }
+    }
+)

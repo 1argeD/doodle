@@ -12,13 +12,9 @@ function Header2() {
     const token = localStorage.getItem("access-token");
 
     const navigate = useNavigate();
-    const [state, setState] = useState(false);
+  
     const { handleSubmit, } 
     = useForm({ mode : "onChange" });
-
-    const onClickHandler = (state) => {
-        setState(!state);
-    }
 
     const onPathHandler = (path) => {
         navigate(path);
@@ -48,6 +44,10 @@ function Header2() {
             </>
         )
 }
+
+require('react-dom');
+window.React2 = require('react');
+console.log(window.React1 === window.React2);
 
 export default Header2;
 

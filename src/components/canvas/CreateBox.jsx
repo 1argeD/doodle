@@ -3,10 +3,12 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import {postCanvas} from "../../redux/canvas/canvasAction"
+import { useNavigate } from "react-router-dom";
 
 
 function CreateBox() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -17,12 +19,12 @@ function CreateBox() {
 
 
     const onSubmit = () => {
-        console.log("버튼 작동 확인")
         const body = {
             canvasTitle : watch().canvasTitle,
             with : {},
         }
         dispatch(postCanvas(body));
+        navigate("/");
     }
 
     const onError = (errors) => {
