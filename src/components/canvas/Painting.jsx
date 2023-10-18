@@ -9,20 +9,28 @@ import { get,useForm } from "react-hook-form";
 
 
 
-function Painting() {
+
+function Painting(props) {
     //로그인
     const token = localStorage.getItem('access-token');
     const member = JSON.parse(localStorage.getItem('user-info'));
     const memberId = member?.id;
     
+    const [loc, setLoc] = useState(null);
+
     const location = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
     const canvasId = location.state.canvasId;
     const penDataO = location.state.penData;
     const penData = JSON.parse(penDataO);
 
+
+    useEffect(()=>{
+        console.log("loc값 찍어보기 : ",loc)
+        setLoc(location.state.canvasId);
+        props.setCanvas(canvasId);
+    },[canvasId])
 
     if(!token) {
         navigate("/");
@@ -132,7 +140,6 @@ function Painting() {
 
     //화면에 그림 뿌려주기
     const drawPen = e => {
-     
         if(getCtx!=null) {
             var mouseX;
             var mouseY;

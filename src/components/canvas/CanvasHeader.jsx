@@ -5,20 +5,29 @@ import HeaderLogin from '../button/HeaderInbutton';
 import HeaderLogOut from "../button/HeaderOutButton";
 import styled from "styled-components";
 import Tool from "./ToolBox";
+import InvitePop from "../popup/Popup";
 import { useState } from "react";
 
 
-function Header2() {
+function Header2(props) {
     const token = localStorage.getItem("access-token");
-
+    const userInfo = JSON.parse(localStorage.getItem("user-info"));
     const navigate = useNavigate();
-  
+    const [popup, setPopup] = useState(false);
+
+    const canvasId = props;
+
     const { handleSubmit, } 
     = useForm({ mode : "onChange" });
 
     const onPathHandler = (path) => {
         navigate(path);
     };
+
+
+    const onClickHandler = (props) => {
+        setPopup(!props);
+    }
 
     let button;
 
@@ -27,6 +36,17 @@ function Header2() {
     } else {
         button = <HeaderLogin />
     } 
+
+
+    let popupState;
+
+    if(popup) {
+        popupState = <InvitePop 
+            canvasId={canvasId}
+        ></InvitePop>
+    } else {
+        popupState = null;
+    }
 
     return (
             <>  
@@ -38,16 +58,19 @@ function Header2() {
                         <NavItem>
                             <Logo onClick={() => onPathHandler("/")}>Doodle</Logo>
                         </NavItem>
-                        {button}
+                        <NavItem>
+                            <Invite 
+                            onClick = {()=>{onClickHandler(popup)}}
+                            >Invite</Invite>
+                            <Font>{userInfo?.nickname}</Font>
+                            {button}
+                        </NavItem>
                     </Navbar>
                 </NavbarWrapper>
+                {popupState}
             </>
         )
 }
-
-require('react-dom');
-window.React2 = require('react');
-console.log(window.React1 === window.React2);
 
 export default Header2;
 
@@ -83,9 +106,8 @@ const NavItem = styled.div`
   width: fit-content;
 `;
 
-const ToolFont = styled.div`
-    padding-top: 50px;
-    margin: 20px;
+const Font = styled.div`
+    padding-top: 40px;
     font-size: 1.5rem;
     font-family: Ink Free;
     height: 4.8rem;
@@ -101,9 +123,8 @@ const Logo = styled.div`
     color: #FFFFFF;
 `
 
-const SignIn = styled.div`
+const Invite = styled.div`
     padding-top: 50px;
-    margin: 20px;
     font-size: 1.5rem;
     font-family: Ink Free;
     height: 4.8rem;

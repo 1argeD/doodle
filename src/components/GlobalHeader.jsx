@@ -7,6 +7,7 @@ import HeaderLogOut from "./button/HeaderOutButton";
 
 function Header() {
     const token = localStorage.getItem("access-token");
+    const userInfo = JSON.parse(localStorage.getItem("user-info"));
 
     const navigate = useNavigate();
 
@@ -37,7 +38,10 @@ function Header() {
                         <NavItem>
                             <Logo onClick={() => onPathHandler("/")}>Doodle</Logo>
                         </NavItem>
-                        {button}
+                        <NavItem>
+                            <Font>{userInfo?.nickname}</Font>
+                            {button}
+                        </NavItem>
                     </Navbar>
                 </NavbarWrapper>
             </>
@@ -88,6 +92,22 @@ const Logo = styled.div`
     margin-right: auto;
     text-align: center;
     font-size: 3rem;
+    font-family: Ink Free;
+    height: 4.8rem;
+    color: #FFFFFF;
+`
+const Font = styled.div`
+    padding-top: 40px;
+    font-size: 1.5rem;
+    font-family: Ink Free;
+    height: 4.8rem;
+    color: #FFFFFF;
+`
+
+
+const Invite = styled.div`
+    padding-top: 50px;
+    font-size: 1.5rem;
     font-family: Ink Free;
     height: 4.8rem;
     color: #FFFFFF;
