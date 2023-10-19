@@ -20,24 +20,25 @@ function InvitePop(props) {
     } = useForm({mode : "onChange"})
     
     const onSubmit =() =>{
-        const body = {
-            nickname : watch().nickname,
-        }
+        const body = watch().nickname;
+        console.log("body데이터값 확인해보기 ? : ", body)
         nickArr.push(body)
         setNickArr(nickArr);
-        console.log("혹시 이것도 작동하는거임?")
+        console.log("배열이 저장되는지 확인해 보기 : ",nickArr)
     }
 
     const onError = (error) => {
         console.log(error)
     }
 
-    const onClickHandler = (props, canvasId) => {
-        console.log("canvasId값 확인해 보기 : ",canvasId)
-        console.log("state값 찍어보기 : ",state)
+    const onClickHandler = (props, canvas) => {
+        console.log("canvasId값 확인해 보기 : ",canvas)
+        // console.log("state값 찍어보기 : ",state)
+        console.log("props값 찍어보기 : ",props);
         if(state) {
-            const inviteData = JSON.stringify(props, canvasId);
-            dispatch(inviteUser(inviteData));
+            const canvasId = JSON.stringify(canvas);
+            const nickname = JSON.stringify(props);
+            dispatch(inviteUser({canvasId, nickname}));
             setState(false);
         }
     }
@@ -60,7 +61,7 @@ function InvitePop(props) {
                     !isDirty ? undefined : errors.nickname ? true : false
                 }
                 />
-                {nickArr.map((value)=>(<div key = {uuid()}>{value.nickname}</div>))}
+                {nickArr.map((value)=>(<div key = {uuid()}>{value}</div>))}
                 
                 <Button>입력하기</Button>
                 </Form>

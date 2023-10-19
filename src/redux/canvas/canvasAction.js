@@ -114,13 +114,15 @@ export const deleteCanvas = createAsyncThunk(
 
 export const inviteUser = createAsyncThunk(
     `/findId/{canvasId}`,
-    async(payload, {rejectWithValue}) => {
+    async(payload,{rejectWithValue}) => {
         try{
-            console.log("일단 이 함수가 작동 중인가요?")
-            console.log("payload 찍어보기 : ",payload)
+            const canvasId = JSON.parse(payload?.canvasId)
+            const nickname = JSON.parse(payload?.nickname)
+            console.log("payload값 찍어보기 : ",nickname);
+            console.log("닉네임과 펄스 데이터 확인해 보기",canvasId.canvas,nickname)
             const response = await axios.post(
-                url+`/findId/${payload.canvasId}`,
-                {"" : payload.nickname},
+                url+`/findId/${canvasId.canvas}`,
+                nickname,
                 {
                     headers : {
                         "Content-Type": "application/json",

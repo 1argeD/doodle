@@ -1,13 +1,13 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const uri = "localhost:8081";
+const url = "http://localhost:8081";
 
 export const postPen = createAsyncThunk(
     '/postPen',
     async (payload, thunkApi) => {
       try {
-        const response = await axios.get(`https://localhost:8081`, {
+        const response = await axios.get(url, {
           headers: {
             Authorization: localStorage.getItem('accessToken'),
           },
@@ -22,7 +22,7 @@ export const postPen = createAsyncThunk(
     '/getPen',
     async (payload, thunkApi) => {
         try{
-            const response = await axios.get(`http://localhost:8081/canvas/pen/${payload}`,
+            const response = await axios.get(url+`/canvas/pen/${payload}`,
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export const postPen = createAsyncThunk(
     `/updatePen`,
     async(payload, thunkApi) => {
         try{
-            const response = await axios.put(`http://localhost:8081`,
+            const response = await axios.put(url,
             {
                 headers: {
                     Authorization: localStorage.getItem('access-token')
@@ -58,7 +58,7 @@ export const postPen = createAsyncThunk(
     `/deletePen`,
     async(payload, thunkApi) => {
         try{
-            const response = await axios.delete(`http:localhost:8081`,
+            const response = await axios.delete(url,
                 {
                     headers: {
                         Authorization: localStorage.getItem('access-token'),
