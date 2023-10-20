@@ -32,7 +32,7 @@ export const canvasSlice = createSlice({
         })
         .addCase(postCanvas.fulfilled, (state, action)=> {
             state.isloading = false;
-            state.canvas = [...state.canvas, action.payload];
+            state.canvas = [...state.list, action.payload];
         })
         .addCase(postCanvas.rejected, (state, action)=> {
             state.isloading = false;

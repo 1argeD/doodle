@@ -3,7 +3,7 @@ import { apis } from "../../shared/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 
-const  url = "http://localhost:8081";
+const  url = "http://192.168.35.29:8081";
 
 export const postCanvas = createAsyncThunk(
     'post/canvas',

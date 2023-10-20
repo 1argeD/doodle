@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { apis } from "../../shared/axios";
 
 
-const URL = "http://localhost:8081"
+const URL = "http://192.168.35.29:8081"
 
 
 export const userSignUp = createAsyncThunk(

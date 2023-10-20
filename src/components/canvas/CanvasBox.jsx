@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getCanvasList } from "../../redux/canvas/canvasAction";
 import { useDispatch } from "react-redux";
+import { useLoaderData } from "react-router-dom";
+import Pagination from "../pagination/Pagination";
+import { useFormState } from "react-hook-form";
 
 function CanvasListBox(props) {
     const dispatch = useDispatch();
     const body = dispatch(getCanvasList());
     const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [isClick, setIsClick] = useState(null);
-    
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage, setPostPerPage] = useState(3);
+
     useEffect(()=>{
         const getData = () => {
             body.then((data)=>{
@@ -22,10 +28,32 @@ function CanvasListBox(props) {
         setIsClick(data);
     }
 
-    if(data&&data.length!=0) {
+    const indexOfLast = currentPage * postsPerPage;
+    const indexOfFirst = indexOfLast - postsPerPage;    
+    
+    console.log("postsPerPage 값 찍어보기",postsPerPage);
+    console.log("currentPage 값 찍어보기",currentPage);
+    console.log("indexOfLast 값 찍어보기",indexOfLast);
+    console.log("indexOfFirst 값 찍어보기",indexOfFirst);
+
+    const currentPosts = (posts) => {
+        if(data!=null) {
+            let currentPosts = 0;
+            console.log("posts 값 찍어보기 : ", posts)
+    
+            currentPosts = posts.slice(indexOfFirst,indexOfLast)
+            console.log("currentPosts 값 찍어보기 : ", currentPosts)
+            return currentPosts;
+        }
+    }
+
+
+    let result = currentPosts(data);
+
+    if(result&&result.length!=0) {
         return(
             <>
-                {data.map(data=>(
+                {result.map(data=>(
                     <ListBox 
                     canvas = {data.id}
                     id = {data.id}
@@ -37,6 +65,12 @@ function CanvasListBox(props) {
                         <Text data={data} key={data.id}>title : {data.canvasTitle}</Text>
                     </ListBox>
                 ))}
+                <Post posts = {currentPosts(data)}></Post>
+                <Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts = {data.length}
+                    paginate = {setCurrentPage}
+                ></Pagination>
             </>)
     } else {
         return(
@@ -71,4 +105,8 @@ const Text = styled.div`
     font-size:50px;
     color : #000000;
     font-family: Ink Free;
+`
+
+const Post = styled.div`
+    display:flex;
 `

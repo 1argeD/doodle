@@ -39,7 +39,7 @@ function Painting(props) {
         handleSubmit,
     } = useForm({mode : "onChange"})
 
-    const sockjs = new SockJS('http://localhost:8081/ws');
+    const sockjs = new SockJS('http://192.168.35.29:8081/ws');
 
     const options = { debug: true, heartbeat: false, protocols: ['v11.stomp'] }
     const ws = webstomp.over(sockjs, options);
