@@ -4,22 +4,45 @@
 한종혁(https://github.com/1argeD)
 
 ## :memo:목차
-[개발기간](#date-개발기간)
-<br/>
-[아키택쳐](#rocket-아키택쳐)
-<br/>
-[make it](#wrench-make-it)
-<br/>
-[useStack](#wrench-usestack)
-<br/>
-[ERD](#rocket-erd)
-<br/>
-[트러블 슈팅](#octocat-트러블-슈팅)
+1. [소개](#art소개)
+2. [개발기간](#date-개발기간)
+3. [아키택쳐](#rocket-아키택쳐)
+4. [make it](#wrench-make-it)
+5. [useStack](#wrench-usestack)
+6. [ERD](#rocket-erd)
+7. [트러블 슈팅](#octocat-트러블-슈팅)
+
+## :art:소개
+
 ## :date: 개발기간
+23.9.10 ~ (진행중)
+
+1차 레퍼런스 : 23.9.10 ~ 23.10.15
 
 ## :rocket: 아키택쳐
 
-## :wrench: make it
+## :wrench: Make It
+<details>
+   <summary><b>1.로그인 기능</b></summary>
+  <ul></ul>
+</details>
+<details>
+   <summary><b>2.회원가입</b></summary>
+  <ul>추후 추가</ul>
+</details>
+<details>
+   <summary><b>3.캔버스 생성, 삭제</b></summary>
+  <ul>추후 추가</ul>
+</details>
+<details>
+   <summary><b>4.캔버스 초대</b></summary>
+  <ul>추후 추가</ul>
+</details>
+<details>
+   <summary><b>5.캔버스</b></summary>
+  <ul>추후 추가</ul>
+</details>
+
 
 ## :wrench: useStack
 
